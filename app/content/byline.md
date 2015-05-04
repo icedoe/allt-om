@@ -1,0 +1,1 @@
+Martin Degerman studerar webprogrammering på BTH, och ägnar all tid han kan frigöra åt att ta det lugnt. Allt han anser sig veta är 42, och han jagar och fasar för den dag då han till slut inser frågan.

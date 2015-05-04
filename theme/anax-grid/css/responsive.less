@@ -1,0 +1,57 @@
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 767px) {
+    #featured-1,
+    #featured-2,
+    #featured-3,
+    #footer-col-1,
+    #footer-col-2,
+    #footer-col-3, 
+    #footer-col-4,
+    #triptych-1,
+    #main  {
+        .column(@columns);
+    }
+
+    #triptych-2,
+    #triptych-3,
+    #sidebar {
+        display: none;
+    }
+}
+ 
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    
+    #footer-col-1,
+    #footer-col-2,
+    #footer-col-3, 
+    #footer-col-4,
+    #triptych-1,
+    #triptych-2  {
+        .column(@columns / 2);
+    }
+
+    #triptych-3 {
+        display: none;
+    }
+}
+ 
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+    #footer-col-1,
+    #footer-col-2,
+    #footer-col-3, 
+    #footer-col-4 {
+        .column(@columns / 4);
+    }  
+
+    #featured-1,
+    #featured-2,
+    #featured-3,
+    #triptych-1,
+    #triptych-2,
+    #triptych-3 {
+        .column(@columns / 3);
+    }
+}
