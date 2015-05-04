@@ -1,0 +1,132 @@
+/**
+ * General elements
+ */
+
+#header,
+#navbar,
+#flash,
+#wrap-featured,
+#wrap-main,
+#wrap-triptych,
+#wrap-footer-col,
+#footer {
+ //   .column(@columns);
+
+}
+
+#navbar {
+  margin-bottom: 1.3*@magicNumber;
+}
+#flash {
+  .column(@columns);
+  margin-bottom: 22px;
+}
+ 
+#main {
+    .column(@columns / 3 * 2);
+	margin-bottom: 22px;
+}
+ 
+#sidebar {
+    .column(@columns / 3);
+    margin-bottom: 22px;
+}
+ 
+#featured-1,
+#featured-2,
+#featured-3,
+#triptych-1,
+#triptych-2,
+#triptych-3 {
+    .column(@columns / 3);
+    margin-bottom: 22px;
+}
+ 
+#footer-col-1,
+#footer-col-2,
+#footer-col-3, 
+#footer-col-4 {
+    .column(@columns / 4);
+    margin-bottom: 22px
+}
+
+/**
+ * Layout of the main page elements 
+ */
+#wrapper {
+  .wrap();
+  margin: 0 auto;
+  max-width: 960px; 
+  background-color: @colorBodyLight;
+}
+
+.showgrid {
+  background-image: url('../../img/grid_12_60_20.png');
+  background-position: center 11px;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+//   : center -6px repeat-y #fff;
+//  background-size: 100%;
+//  background-position: ypos12px;
+}
+
+//#wrapper,
+#wrap-featured,
+#wrap-main,
+#wrap-triptych,
+#wrap-footer-col {
+    .clearfix();
+}
+
+/**
+ * Layout for header
+ */
+#header {
+  position: relative;
+  background-color: @colorBody2;
+}
+
+.sitetitle {
+  position: absolute;
+  top: 6px;
+  left: 400px;
+}
+
+.siteslogan {
+  position: absolute;
+  top: 65px;
+  left: 400px;
+  clear:right;
+}
+
+
+/**
+ * Layout for main
+ */
+
+
+
+/**
+ * Layout for footer
+ */
+#footer {
+  background-color: @colorBody;
+}
+
+
+/**
+ * For articles
+ */
+
+/**
+ * Random
+ */
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.clear {
+  clear: both;
+}
