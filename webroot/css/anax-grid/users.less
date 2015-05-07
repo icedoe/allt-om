@@ -1,0 +1,48 @@
+.userTableRow {
+	.clearfix();
+}
+
+.userTable {
+	display: table-cell;
+	width: 25%;
+	margin: 5px;
+
+	height: 3*@magicNumber;
+	overflow: hidden;
+	table{
+		height: 100%;
+	}
+	tr{
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+	td {
+		padding: 1px;
+		font-size: @magicNumber*0.4;
+		
+		width: 25%;
+		vertical-align: middle;
+		
+		background-color: blue;
+
+		* {
+			margin-bottom: 0;
+
+		}
+		h4 {
+			font-size: 0.8*@magicNumber;
+			font-weight: bold;
+		}
+		h6 {
+			font-size: 0.6*@magicNumber;
+			font-weight: bold;
+		}
+		p {
+			font-size: @magicNumber*0.4;
+			height: 1.2*@magicNumber;
+		}
+		hr {
+			margin: 0;
+		}
+	}
+}

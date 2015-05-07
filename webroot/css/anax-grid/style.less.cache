@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:39531:"html {
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:40372:"html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -2555,4 +2555,62 @@ figure.rounded img {
     margin-bottom: 22px;
   }
 }
-";s:5:"files";a:24:{s:72:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\style.less";i:1429526158;s:76:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\normalize.less";i:1429526159;s:76:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\variables.less";i:1429526158;s:73:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\mixins.less";i:1429526159;s:77:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\css3mixins.less";i:1429526160;s:71:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\grid.less";i:1429526159;s:77:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\typography.less";i:1429526158;s:76:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\structure.less";i:1429528031;s:76:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\navbar_me.less";i:1429526159;s:73:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\figure.less";i:1429526159;s:103:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\font-awesome.less";i:1429526164;s:100:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\variables.less";i:1429526163;s:97:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\mixins.less";i:1429526164;s:95:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\path.less";i:1429526164;s:95:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\core.less";i:1429526164;s:97:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\larger.less";i:1429526164;s:102:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\fixed-width.less";i:1429526164;s:95:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\list.less";i:1429526164;s:106:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\bordered-pulled.less";i:1429526164;s:99:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\animated.less";i:1429526164;s:106:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\rotated-flipped.less";i:1429526164;s:98:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\stacked.less";i:1429526164;s:96:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\font-awesome-4.3.0\less\icons.less";i:1429526164;s:77:"C:\xampp\htdocs\Skolgrejs\phpmvc\kmom03\webroot\css\anax-grid\responsive.less";i:1429526159;}s:7:"updated";i:1429528033;}
+.userTableRow {
+  *zoom: 1;
+}
+.userTableRow:before,
+.userTableRow:after {
+  content: "";
+  display: table;
+}
+.userTableRow:after {
+  clear: both;
+}
+.userTableRow:before,
+.userTableRow:after {
+  content: "";
+  display: table;
+}
+.userTableRow:after {
+  clear: both;
+}
+.userTable {
+  display: table-cell;
+  width: 25%;
+  margin: 5px;
+  height: 66px;
+  overflow: hidden;
+}
+.userTable table {
+  height: 100%;
+}
+.userTable tr {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.userTable td {
+  padding: 1px;
+  font-size: 8.8px;
+  width: 25%;
+  vertical-align: middle;
+  background-color: blue;
+}
+.userTable td * {
+  margin-bottom: 0;
+}
+.userTable td h4 {
+  font-size: 17.6px;
+  font-weight: bold;
+}
+.userTable td h6 {
+  font-size: 13.2px;
+  font-weight: bold;
+}
+.userTable td p {
+  font-size: 8.8px;
+  height: 26.4px;
+}
+.userTable td hr {
+  margin: 0;
+}
+";s:5:"files";a:25:{s:76:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\style.less";i:1430898327;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\normalize.less";i:1430397069;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\variables.less";i:1430397068;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\mixins.less";i:1430397070;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\css3mixins.less";i:1430397070;s:75:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\grid.less";i:1430397070;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\typography.less";i:1430397068;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\structure.less";i:1430900094;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\navbar.less";i:1430897781;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\figure.less";i:1430397070;s:107:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\font-awesome.less";i:1430397076;s:104:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\variables.less";i:1430397075;s:101:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\mixins.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\path.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\core.less";i:1430397077;s:101:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\larger.less";i:1430397076;s:106:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\fixed-width.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\list.less";i:1430397076;s:110:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\bordered-pulled.less";i:1430397077;s:103:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\animated.less";i:1430397077;s:110:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\rotated-flipped.less";i:1430397076;s:102:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\stacked.less";i:1430397075;s:100:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\icons.less";i:1430397076;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\responsive.less";i:1430397069;s:76:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\users.less";i:1430908996;}s:7:"updated";i:1430908998;}

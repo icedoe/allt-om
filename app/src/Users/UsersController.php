@@ -3,87 +3,40 @@ namespace Anax\Users;
 
 class UsersController implements \Anax\DI\IInjectionAware
 {
-	use \Anax\DI\TInjectable;
+	use \Anax\DI\TInjectable, \Anax\MVC\TRedirectHelpers;
 
-	public function initialize()
-	{
-		$this->users =new \Anax\Users\User();
-		$this->users->setDI($this->di);
-	}
 
 	public function indexAction()
 	{
+		$this->di->users->query()->where('deleted is null');
+		$all = $this->di->users->execute();
+		$users=[];
+		$n=-1;
+		foreach($all as $key => $user){
+			if(($key+1)%4 == 1){
+				$users[++$n] =[];
+			}
+			$users[$n][] =$user;
+		}
+
 		$this->theme->setTitle("Användare");
-		$this->views->add('default/page', [
-        	'title' => "Användarsidor",
-        	'content' => "Alternativ för användarhantering.",
-        	'links' => [
-        		[
-        			'href' => $this->url->create('users/setup'),
-        			'text' => "Återställ databasen"
-        		],
-        	    [
-        	        'href' => $this->url->create('users/list'),
-        	        'text' => "Visa alla användare",
-        	    ],
-        	    [
-        	        'href' => $this->url->create('users/active'),
-        	        'text' => "Visa aktiva användare",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/inactive'),
-        	    	'text' => "Visa inaktiva användare",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/activate'),
-        	    	'text' => "Aktivera användare",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/deactivate'),
-        	    	'text' => "Inaktivera användare",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/deleted'),
-        	    	'text' => 'Visa mjukt raderade',
-        	    ],
-        	    [
-        	        'href' => $this->url->create('users/delete'),
-        	        'text' => "Ta bort användare",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/soft-delete'),
-        	    	'text' => "Ta bort användare (Kan ångras)",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/undo-delete'),
-        	    	'text' => "Ångra radering",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/add'),
-        	    	'text' => "Lägg till användare",
-        	    ],
-        	    [
-        	    	'href' => $this->url->create('users/update'),
-        	    	'text' => "Uppdatera användare",
-        	    ],
-        	],
-    	]);
-	}
-
-	public function listAction()
-	{
-		$all = $this->users->findAll();
-
-		$this->theme->setTitle("Visa alla");
 		$this->views->add('users/list-all', [
-			'users' => $all,
+			'users' => $users,
 			'title' =>"Alla användare",
 			]);
+		$this->di->dispatcher->forward([
+			'controller' => 'sidebar',
+			'action' => '',
+			'params' => [$_POST, 'users'],
+			]
+		);
 	}
+
+	
 
 	public function activeAction()
 	{
-		$all =$this->users->query()
+		$all =$this->di->users->query()
 			->where('active IS NOT NULL')
 			->andWhere('deleted IS NULL')
 			->execute();
@@ -97,7 +50,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function inactiveAction()
 	{
-		$all =$this->users->query()->where('active IS NULL')->execute();
+		$all =$this->di->users->query()->where('active IS NULL')->execute();
 
 		$this->theme->setTitle("Inaktiva användare");
 		$this->views->add('users/list-all', [
@@ -107,7 +60,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function deletedAction()
 	{
-		$all =$this->users->query()
+		$all =$this->di->users->query()
 			->where('deleted IS NOT NULL')
 			->execute();
 
@@ -120,13 +73,51 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function idAction($id=null)
 	{
-		$user =$this->users->find($id);
+		$user =$id ? $this->di->users->find($id)->getProperties() : $this->di->session->get('user');
+		print_r($user);
+		$id =$id ? $id : $user['id'];
 
 		$this->theme->setTitle("Visa användare");
-		$this->views->add('users/list-all', [
-			'users' => [$user],
+		$this->views->add('users/view', [
+			'user' => $user,
 			'title' => "Användare: $id",
-		]);
+		],
+		'main'
+		);
+
+		$this->di->dispatcher->forward([
+			'controller' => 'sidebar',
+			'action' => '',
+			'params' => [$_POST, 'users', $id],
+			]
+		);
+	}
+
+	public function loginAction()
+	{
+		$form =$this->getLoginForm();
+
+		if($form->check()){
+			$name =$this->di->form->Value('username');
+			$password =password_hash($this->di->form->Value('password'), PASSWORD_DEFAULT);
+
+			if($user =$this->di->users->login($name, $password)){
+				$this->di->session->set('user', $user);
+				$this->redirectTo();
+			}
+		}
+		$this->views->add(
+			'me/page', [
+				'title' => 'Logga in',
+				'form' => $form->getHTML()
+			],
+			'main');
+	}
+
+	public function logoutAction()
+	{
+		$this->di->users->logout();
+		$this->redirectTo($this->di->session->get('lastPage'));
 	}
 
 
@@ -142,68 +133,85 @@ class UsersController implements \Anax\DI\IInjectionAware
 				'email' => $this->di->form->Value('email'),
 				'name' => $this->di->form->Value('name'),
 				'password' => password_hash($this->di->form->Value('password'), PASSWORD_DEFAULT),
+				'type' => 'user',
 				'created' => $now,
 				'active' =>$now,
 			];
 
-			if($this->users->save($user)){
+			if($this->di->users->save($user)){
+				$this->di->users->login($user['name'], $user['password']);
+
+				$url = $this->di->url->create('users/id/'.$this->di->users->id);
+				$this->response->redirect($url);
+			}
+		}
+
+        $this->views->add('users/form', [
+        	'title' => 'Skapa användare',
+   	        'form' => $form->getHTML(),
+   	    ],
+   	    'main');
+	}
+
+	public function updateAction($id=false, $upgrade=false)
+	{
+		$user = $id ? $this->di->users->find($id)->getProperties() : $this->di->session->get('user');
+		
+		if($upgrade){
+			$u =$this->di->session->get('user');
+			if($u['type'] == 'admin'){
+				$u =[
+					'id' => $user['id'],
+					'type' => $upgrade
+				];
+				if($this->di->users->save($u)){
+				$url =$this->di->url->create('users/id/'.$this->di->users->id);
+				$this->response->redirect($url);
+				}
+			}
+		}
+
+		$form =$this->getUserForm($user);
+
+		if($form->check()){
+			$u =[
+				'name' => $this->di->request->getPost('name'),
+				'acronym' => $this->di->request->getPost('acronym'),
+				'email' => $this->di->request->getPost('email'),
+				'shortdesc' => $this->di->request->getPost('shortdesc'),
+				'description' => $this->di->request->getPost('description'),
+				'updated' => gmdate('Y-m-d H:i:s')
+			];
+			if(!$this->di->request->getPost('password')){
+
+				unset($user['password']);
+			}else{
+				$u['password'] =$this->di->request->getForm('password');
+			}
+			if(!empty($this->di->request->getPost('id'))){
+				$u['id'] = $this->di->request->getPost('id');
+			}
+			if($this->di->users->save($u)){
 				$url =$this->di->url->create('users/id/'.$this->users->id);
 				$this->response->redirect($url);
 			}
-		}
-
-        $this->views->add('me/page', [
-   	        'content' => $form->getHTML(),
-   	    ]);
-	}
-
-	public function updateAction($id=false)
-	{
-		if(!$id){
-			$form =$this->getIdSelect('Uppdatera');
-
-			if($form->check()){
-				$url =$this->di->url->create('users/update/'.$this->di->request->getPost('users'));
-				$this->response->redirect($url);
-			}
 		}else{
-			$user =$this->users->find($id);
-			$user =$user->getProperties();
-			$form =$this->getUserForm($user);
-
-			if($form->check()){
-				$u =[
-					'name' => $this->di->request->getPost('name'),
-					'acronym' => $this->di->request->getPost('acronym'),
-					'email' => $this->di->request->getPost('email'),
-					'updated' => gmdate('Y-m-d H:i:s')
-				];
-				if(!$this->di->request->getPost('password')){
-					unset($user['password']);
-				}else{
-					$u['password'] =$this->di->request->getForm('password');
-				}
-				if($this->users->save($u)){
-					$url =$this->di->url->create('users/id/'.$this->users->id);
-					$this->response->redirect($url);
-				}
-			}else{
-				$form->saveInSession =true;
-			}
+			$form->saveInSession =true;
 		}
+
 		$this->views->add('me/page', [
 			'content' => $form->getHTML()]);
 	}
 	
 	public function activateAction($id=0)
 	{
-		$users =$this->users->query()->where('active IS NULL')->execute();
+		$users =$this->di->users->query()->where('active IS NULL')->execute();
 
 		$form =$this->getIdSelect('Aktivera', $users);
 
 		if($form->check()){
 			$id =$this->di->request->getPost('users');
-			$user =$this->users->find($id);
+			$user =$this->di->users->find($id);
 
 			$now =gmdate('Y-m-d H:i:s');
 			$user->active =$now;
@@ -219,13 +227,13 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function deactivateAction()
 	{
-		$users = $this->users->query()->where('active IS NOT NULL')->execute();
+		$users = $this->di->users->query()->where('active IS NOT NULL')->execute();
 
 		$form =$this->getIdSelect('Inaktivera', $users);
 
 		if($form->check()){
 			$id =$this->di->request->getPost('users');
-			$user =$this->users->find($id);
+			$user =$this->di->users->find($id);
 
 			$now =gmdate('Y-m-d H:i:s');
 			$user->active =null;
@@ -249,7 +257,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 		if($form->check()){
 			$id =$this->di->request->getpost('users');
-			if($this->users->delete($id)){
+			if($this->di->users->delete($id)){
 				$content ="Användare $id raderades";
 				$url = $this->di->url->create('users/delete');
 				$this->response->redirect($url);
@@ -274,7 +282,13 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function softDeleteAction($id=null)
 	{
-		$users =$this->users->query()->where("'deleted' = null")->execute();
+		if($id){
+			$u = $this->di->session->get('user');
+			if($u['type'] == 'admin'){
+				$this->doSoftDelete($id);
+			}
+		}
+		$users =$this->di->users->query()->where("'deleted' = null")->execute();
 
 		$form =$this->getIdSelect('Radera', $users);
 
@@ -283,12 +297,8 @@ class UsersController implements \Anax\DI\IInjectionAware
 		if($form->check()){
 			$form->addOutput('Användare raderad');
 			$id =$this->di->request->getPost('users');
-			$user =$this->users->find($id);
-			$now =gmdate('Y-m-d H:i:s');
-			$user->deleted =$now;
-			$user->save();
-			$url =$this->url->create('users/id/'.$id);
-			$this->response->redirect($url);
+			$this->doSoftDelete($id);
+			
 		}
 		
 		$this->views->add('me/page', [
@@ -297,13 +307,13 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function undoDeleteAction($id=null)
 	{
-		$users =$this->users->query()->where("deleted IS NOT NULL")->execute();
+		$users =$this->di->users->query()->where("deleted IS NOT NULL")->execute();
 
 		$form =$this->getIdSelect('Återställ', $users);
 
 		if($form->check()){
 			$id =$this->di->request->getpost('users');
-			$user =$this->users->find($id);
+			$user =$this->di->users->find($id);
 			$user->deleted =null;
 			$user->save();
 		
@@ -325,7 +335,13 @@ class UsersController implements \Anax\DI\IInjectionAware
     	        'acronym'   => ['varchar(20)', 'unique', 'not null'],
     	        'email'     => ['varchar(80)', 'not null'],
     	        'name'      => ['varchar(80)', 'not null'],
+    	        'shortdesc'	=> ['varchar(255)'],
+    	        'description' =>['text'],
     	        'password'  => ['varchar(255)', 'not null'],
+    	        'image'		=> ['varchar(255)'],
+    	        'posted'	=> ['integer'],
+    	        'points'	=> ['integer'],
+    	        'type'		=> ['varchar(20)'],
     	        'created'   => ['datetime'],
     	        'updated'   => ['datetime'],
     	        'deleted'   => ['datetime'],
@@ -335,7 +351,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 	    $this->db->execute();
 	     $this->db->insert(
 	        'user',
-		        ['acronym', 'email', 'name', 'password', 'created', 'active']
+		        ['acronym', 'email', 'name', 'shortdesc', 'password', 'image', 'type', 'posted', 'points', 'created', 'active']
 	    );
 
 	    $now =gmdate('Y-m-d H:i:s');
@@ -344,7 +360,12 @@ class UsersController implements \Anax\DI\IInjectionAware
 	        'admin',
 	        'admin@dbwebb.se',
 	        'Administrator',
+	        'En av sidans administratörer',
 	        password_hash('admin', PASSWORD_DEFAULT),
+	        $this->di->users->gravUrl('admin@dbwebb.se'),
+	        'admin',
+	        '0',
+	        '0',
 	        $now,
 	        $now
 	    ]);
@@ -352,7 +373,12 @@ class UsersController implements \Anax\DI\IInjectionAware
 	        'doe',
 	        'doe@dbwebb.se',
 	        'John/Jane Doe',
+	        'En förvirrad stackars användare, vars enda brott var registrering',
 	        password_hash('doe', PASSWORD_DEFAULT),
+	        $this->di->users->gravUrl('doe@dbwebb.se'),
+	        'user',
+	        '0',
+	        '0',
 	        $now,
 	        $now
 	    ]);
@@ -360,15 +386,46 @@ class UsersController implements \Anax\DI\IInjectionAware
 	    $this->response->redirect($url);
 	}
 
+	public function getLoginForm()
+	{
+		$vals =[
+			'username' => [
+				'type' => 'text',
+				'label' => 'Användarnamn',
+				'required' => true,
+				'validation' => ['not_empty'],
+			],
+			'password' => [
+				'type' => 'password',
+				'label' => 'Lösenord',
+				'required' => true,
+				'validation' => ['not_empty'],
+			],
+			'doLogin' => [
+				'type' => 'submit',
+				'callback' => function() {return true;}
+			],
+		];
+		$form =$this->di->form->create([], $vals);
+		return $form;
+	}
+
 	public function getUserForm($user=[])
 	{
+		$user['id'] =isset($user['id']) ? $user['id'] : null;
 		$user['name'] =isset($user['name']) ? $user['name'] : '';
 		$user['acronym'] =isset($user['acronym']) ? $user['acronym'] : '';
 		$user['email'] =isset($user['email']) ? $user['email'] : '';
+		$user['shortdesc'] =isset($user['shortdesc']) ? $user['shortdesc'] : '';
+		$user['description'] =isset($user['description']) ? $user['description'] : '';
 		$passValidation =isset($user['password']) ? "pass" : "not_empty";
 		$passReq =isset($user['password']) ? false : true;
 		
 		$vals=[
+			'id' => [
+				'type'		=> 'hidden',
+				'value'		=> $user['id']
+			],
 			'name' => [
                 'type'        => 'text',
                 'label'       => 'Name of contact person:',
@@ -392,6 +449,14 @@ class UsersController implements \Anax\DI\IInjectionAware
                 'type'        => 'password',
                 'required'    => $passReq,
                 'validation'  => [$passValidation],
+            ],
+            'shortdesc'	=> [
+            	'type'		=>'text',
+            	'value'		=> $user['shortdesc'],
+            ],
+            'description' => [
+            	'type'		=> 'textarea',
+            	'value'		=> $user['description'],
             ],
             'submit' => [
                 'type'      => 'submit',
@@ -436,5 +501,13 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 			return $form;
 	}
-	
+	private function doSoftDelete($id)
+	{
+		$user =$this->di->users->find($id);
+			$now =gmdate('Y-m-d H:i:s');
+			$user->deleted =$now;
+			$user->save();
+			$url =$this->url->create('users/id/'.$id);
+			$this->response->redirect($url);
+	}
 }

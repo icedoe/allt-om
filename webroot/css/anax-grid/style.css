@@ -2555,3 +2555,61 @@ figure.rounded img {
     margin-bottom: 22px;
   }
 }
+.userTableRow {
+  *zoom: 1;
+}
+.userTableRow:before,
+.userTableRow:after {
+  content: "";
+  display: table;
+}
+.userTableRow:after {
+  clear: both;
+}
+.userTableRow:before,
+.userTableRow:after {
+  content: "";
+  display: table;
+}
+.userTableRow:after {
+  clear: both;
+}
+.userTable {
+  display: table-cell;
+  width: 25%;
+  margin: 5px;
+  height: 66px;
+  overflow: hidden;
+}
+.userTable table {
+  height: 100%;
+}
+.userTable tr {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.userTable td {
+  padding: 1px;
+  font-size: 8.8px;
+  width: 25%;
+  vertical-align: middle;
+  background-color: blue;
+}
+.userTable td * {
+  margin-bottom: 0;
+}
+.userTable td h4 {
+  font-size: 17.6px;
+  font-weight: bold;
+}
+.userTable td h6 {
+  font-size: 13.2px;
+  font-weight: bold;
+}
+.userTable td p {
+  font-size: 8.8px;
+  height: 26.4px;
+}
+.userTable td hr {
+  margin: 0;
+}

@@ -6,7 +6,7 @@ namespace Anax\DI;
  * Extended factory for Anax documentation.
  *
  */
-class CDIFactoryTest extends CDIFactoryDefault
+class CDIFactoryTest extends CDIFactory
 {
    /**
      * Construct.

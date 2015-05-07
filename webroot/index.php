@@ -1,11 +1,12 @@
 <?php
 	require __DIR__.'/config_full.php';
 
-	$app->theme->configure(ANAX_APP_PATH.'config/theme_me.php');
+	$app->theme->configure(ANAX_APP_PATH.'config/theme_grid.php');
 	$app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
-	$app->navbar->configure(ANAX_APP_PATH.'config/navbar_me.php');
+	$app->navbar->configure(ANAX_APP_PATH.'config/navbar.php');
 
-	
+	$grid= $app->request->getGet('showgrid') ? 'showgrid' : '';
+	$app->theme->setVariable('grid', $grid);
 /*	$di->set('ThemeController', function() use ($di) {
 		$controller = $app->url->setScript('theme.php');
 		$controller->setDI($di);
@@ -15,7 +16,7 @@
 
 
 	$app->router->add('', function() use ($app){
-		$app->theme->setTitle("Me");
+		$app->theme->setTitle("Allt om...");
 
 		$content = $app->fileContent->get('me.md');
 		$content = $app->textFilter->doFilter($content, 'shortcode, markdown');
@@ -25,7 +26,14 @@
 		$app->views->add('me/page', [
 			'content' => $content,
 			'byline' => $byline,
-		]);
+		],
+		'main');
+
+		$app->dispatcher->forward([
+			'controller' => 'sidebar',
+			'action' => 'index',
+			'params' => array($_POST),
+			]);
 	});
 
 	$app->router->add('redovisning', function() use ($app){

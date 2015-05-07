@@ -55,18 +55,17 @@ return [
         ],
  
         // This is a menu item
-        'controller' => [
-            'text'  =>'Controller (marked for all descendent actions)',
-            'url'   => $this->di->get('url')->create('controller'),
-            'title' => 'Url to relative frontcontroller, other file',
-            'mark-if-parent-of' => 'controller',
+        'users' => [
+            'text'  =>'Användare',
+            'url'   => $this->di->get('url')->create('users'),
+            'title' => 'Visa registreade användare',
         ],
 
         // This is a menu item
-        'about' => [
-            'text'  =>'About',
-            'url'   => $this->di->get('url')->create('about'),
-            'title' => 'Internal route within this frontcontroller'
+        'users' => [
+            'text'  =>'Användare',
+            'url'   => $this->di->get('url')->create('users'),
+            'title' => 'Interna'
         ],
     ],
  

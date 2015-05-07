@@ -39,6 +39,7 @@ class CDatabaseModel implements \Anax\di\IInjectionAware
 				 ->where($key.'=?');
 
 		$this->db->execute([$value]);
+		//return $this->db->fetchAll();
 		return $this->db->fetchInto($this);
 	}
 

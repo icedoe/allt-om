@@ -22,6 +22,12 @@ $di->set('CommentController', function() use ($di) {
 		return $controller;
 	});
 
+$di->set('SidebarController', function() use ($di) {
+		$controller =new \Anax\Sidebar\SidebarController();
+		$controller->setDI($di);
+		return $controller;
+});
+
 //$di->set('FormController', function () use ($di) {
 //    $controller = new \Anax\HTMLForm\FormSmallController();
 //    $controller->setDI($di);
