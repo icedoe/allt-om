@@ -4,33 +4,33 @@
 <?php if (is_array($comments)) : ?>
 <div class='mess'>
 <table>
-<?php foreach ($comments as $id => $comment) : ?>
+<?php foreach ($comments as $id => $com) : ?>
+	<?php foreach($com as $comment) : ?>
+	<tr>
 		<th>
-			<form method='post'>
-				<input type='hidden' name='commenter' value='<?=$commenter ?>'/>
-				<input type='hidden' name="redirect" value="<?=$redirect?>"/>
-				<input type='hidden' name='id' value='<?=$comment->id?>'/>
-				<input class='commentHead' type='submit' name='commentId' value="Kommentar #<?=$id?>" />
-			</form>
+			#<?=$comment->id?>
+		<th>
+			<?=$comment->title?>
 		</th>
-		<tr>
+	</tr>
+	<tr>
+		<td>
+			<img src='<?=$comment->image?>' alt='<?=$comment->author?>'>
+			<?=$comment->author?><br/>
+			<?=$comment->authortype?>
 		<td>
 			<p class='clear'><?=$comment->content?></p>
 		</td>
 		<td>
-			<p><?=$comment->name?></p>
-			<p><?=$comment->email?></p>
-			<p><?=$comment->web?></p>
+			<?php if($this->di->session->has('user') && $comment->type != 'comment') : ?>
+				<a href='<?php echo $this->di->url->create("comment/edit/comment/$comment->id")?>'>Kommentera</a><br/>
+				<a href='<?php echo $this->di->url->create("comment/edit/answer/$comment->id")?>'>Besvara</a>
+			<?php endif; ?>
 		</td>
-		</tr>
-
-	</div>
+	</tr>
+	<?php endforeach; ?>
 <?php endforeach; ?>
 </table>
-
-<?php foreach ($links as $link) : ?>
-<li><a href="<?=$link['href']?>"><?=$link['text']?></a></li>
-<?php endforeach; ?>
 
 </div>
 <?php endif; ?>

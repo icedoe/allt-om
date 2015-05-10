@@ -17,7 +17,7 @@ $di->set('UsersController', function() use ($di) {
 });
 
 $di->set('CommentController', function() use ($di) {
-		$controller =new Phpmvc\Comment\CommentController();
+		$controller =new \Deg\Comment\CommentController();
 		$controller->setDI($di);
 		return $controller;
 	});

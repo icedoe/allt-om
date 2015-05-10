@@ -36,32 +36,7 @@
 			]);
 	});
 
-	$app->router->add('redovisning', function() use ($app){
-		$app->theme->setTitle("Redovisning");
-
-		$content =$app->fileContent->get('redovisning.md');
-		$content =$app->textFilter->doFilter($content, 'markdown');
-		$byline =$app->fileContent->get('byline.md');
-		$byline =$app->textFilter->doFilter($byline, 'markdown');
-
-		$app->views->add('me/page', [
-			'content' => $content,
-			'byline' => $byline,
-		]);
-//		$doShow =$app->request->getPost('doShow') ? true : false;
-//		$doShow =$app->request->getPost('doHide') ? false : $doShow;
-
-		$id =$app->request->getPost('commentId');
-
-		$app->dispatcher->forward([
-       		'controller' => 'comment',
-        	'action'     => 'control',
-        	'params'	=> ['redovisning', 'reports']
-    	]);
-		
-  		
-
-	});
+	
 
 	$app->router->add('source', function() use ($app){
 		$app->theme->addStylesheet('css/source.css');

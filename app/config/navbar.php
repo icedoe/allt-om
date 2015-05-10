@@ -53,20 +53,22 @@ return [
                 ],
             ],
         ],
+
+         // This is a menu item
+        'comments' => [
+            'text'  =>'Frågor',
+            'url'   => $this->di->get('url')->create('comment'),
+            'title' => 'Användarnas frågor'
+        ],
  
         // This is a menu item
         'users' => [
             'text'  =>'Användare',
             'url'   => $this->di->get('url')->create('users'),
-            'title' => 'Visa registreade användare',
+            'title' => 'Visa registrerade användare',
         ],
 
-        // This is a menu item
-        'users' => [
-            'text'  =>'Användare',
-            'url'   => $this->di->get('url')->create('users'),
-            'title' => 'Interna'
-        ],
+       
     ],
  
 

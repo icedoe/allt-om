@@ -90,18 +90,23 @@ class SidebarController implements \Anax\DI\IInjectionAware
 	private function getUserMenu()
 	{
 		$array =[];
-		//logout
-		$array['Logga ut'] =$this->di->url->create('users/logout');
+		
+		//Question
+		$array['Ställ fråga'] = $this->di->url->create('comment/edit');
 		//profile
 		if($this->calling == 'users' && $this->modifier == $this->user['id']) {
 			$array['Redigera profil'] = $this->di->url->create('users/update');
 			$array['Avregistera'] = $this->di->url->create('users/soft-delete/'.$this->user['id']);
 		} else {
-			$array['Visa profil'] =$this->di->url->create('users/id');
+			$array['Min profil'] =$this->di->url->create('users/id');
 		}
 		
 		//tracked subjects
 		$array['Bevakning'] =$this->di->url->create('users/tracked');
+
+		//logout
+		$array['Logga ut'] =$this->di->url->create('users/logout');
+
 		return $array;
 	}
 
@@ -109,19 +114,26 @@ class SidebarController implements \Anax\DI\IInjectionAware
 	{
 		$menu =$this->getUserMenu();
 
+		unset($menu['Logga ut']);
 		$menu['Återställ raderad'] = $this->di->url->create('users/undo-delete');
 
 		if($this->calling){
 			switch($this->calling) {
 				case 'users':
-					if($this->modifier){echo "READ";
+					if($this->modifier){
 						if($this->modifier != $this->user['id']){
 							$menu['Ta bort'] = $this->di->url->create('users/soft-delete/'.$this->modifier);
 							$menu['Utse admin'] = $this->di->url->create('users/update/'.$this->modifier.'/admin');
 						}
 					}
+					break;
+				case 'comment':
+					if($this->modifier){
+						$menu['Ta bort'] = $this->di->url->create('comment/soft-delete/'.$this->modifier);
+					}
 			}
 		}
+		$menu['Logga ut'] = $this->di->url->create('users/logout');
 		return $menu;
 	}
 }

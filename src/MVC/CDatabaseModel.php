@@ -95,22 +95,22 @@ class CDatabaseModel implements \Anax\di\IInjectionAware
 		return $res;
 	}
 
-	private function update($values, $key)
+	protected function update($values, $key)
 	{
 		$val =$values[$key];
 		unset($values[$key]);
 		$keys =array_keys($values);
 		$values =array_values($values);
 
-		$values[] =$val;
-
+	//	$values[] =$val;
 		$this->db->update(
 			$this->getSource(),
 			$keys,
-			$key.'=?'
+			$values,
+			$key.'='.$val
 		);
 
-		return $this->db->execute($values);
+		$this->db->execute($values);
 	}
 
 	protected function delete($value, $key)

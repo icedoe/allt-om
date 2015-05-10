@@ -74,7 +74,6 @@ class UsersController implements \Anax\DI\IInjectionAware
 	public function idAction($id=null)
 	{
 		$user =$id ? $this->di->users->find($id)->getProperties() : $this->di->session->get('user');
-		print_r($user);
 		$id =$id ? $id : $user['id'];
 
 		$this->theme->setTitle("Visa användare");
@@ -86,9 +85,9 @@ class UsersController implements \Anax\DI\IInjectionAware
 		);
 
 		$this->di->dispatcher->forward([
-			'controller' => 'sidebar',
+			'controller' => 'comment',
 			'action' => '',
-			'params' => [$_POST, 'users', $id],
+			'params' => [$_POST, 'users', $user['acronym']],
 			]
 		);
 	}

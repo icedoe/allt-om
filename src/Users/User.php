@@ -65,6 +65,6 @@ class User extends \Anax\MVC\CDatabaseModel
 	public function gravUrl($email)
 	{
 		$hash =md5(strtolower(trim($email)));
-		return 'http://www.gravatar.com/avatar/'.$hash;
+		return 'http://www.gravatar.com/avatar/'.$hashs;
 	}
 }
