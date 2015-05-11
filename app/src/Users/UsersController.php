@@ -32,7 +32,20 @@ class UsersController implements \Anax\DI\IInjectionAware
 		);
 	}
 
-	
+	public function startAction($post, $calling)
+	{
+		$all =$this->di->users->query()->orderBy('posted')->limit(4)->execute();
+
+		$this->views->add('users/list-all', [
+			'users' => [$all],
+			], 'flash'
+		);
+		$this->dispatcher->forward([
+			'controller' => 'tags',
+			'action' => 'start',
+			'params' => [$post, $calling]
+			]);
+	}
 
 	public function activeAction()
 	{
@@ -101,7 +114,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 			$password =password_hash($this->di->form->Value('password'), PASSWORD_DEFAULT);
 
 			if($user =$this->di->users->login($name, $password)){
-				$this->di->session->set('user', $user);
+			//	$this->di->session->set('user', $user);
 				$this->redirectTo();
 			}
 		}

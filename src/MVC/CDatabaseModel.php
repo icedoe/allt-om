@@ -148,6 +148,18 @@ class CDatabaseModel implements \Anax\di\IInjectionAware
 		return $this;
 	}
 
+	public function orderBy($col)
+	{
+		$this->db->orderBy($col);
+		return $this;
+	}
+
+	public function limit($limit)
+	{
+		$this->db->limit($limit);
+		return $this;
+	}
+
 	public function execute($params =[])
 	{
 		$this->db->execute($this->db->getSQL(), $params);

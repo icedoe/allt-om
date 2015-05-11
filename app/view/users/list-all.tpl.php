@@ -1,4 +1,6 @@
-<h1><?=$title?></h1>
+<?php if(isset($title)) : ?>
+	<h1><?=$title?></h1>
+<?php endif; ?>
 
 <?php foreach($users as $usergroup): ?>
 	<div class='userTableRow'>
@@ -30,5 +32,3 @@
 
  	</div>
 <?php endforeach; ?>
- 
-<p><a href='<?=$this->url->create('')?>'>Home</a></p>

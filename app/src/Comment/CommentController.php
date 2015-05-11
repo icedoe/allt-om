@@ -46,6 +46,22 @@ class CommentController implements \Anax\DI\IInjectionAware
             ]);
     }
 
+    public function startAction($post, $calling)
+    {
+        $all = $this->comments->findLatest(5);
+
+        $this->di->views->add('comment/questions', [
+            'comments' => $all],
+            'main'
+        );
+
+        $this->di->dispatcher->forward([
+            'controller' => 'sidebar',
+            'action' => 'index',
+            'params' => [$post, $calling],
+            ]);
+    }
+
     public function viewAction($id)
     {
         $all = $this->comments->findFullDisplay($id);
@@ -156,6 +172,10 @@ class CommentController implements \Anax\DI\IInjectionAware
 
                     if($comment->save($values)){
                         $done =true;
+                        $this->user['posted'] =empty($this->user['posted']) ? 1 : $this->user['posted']+1;
+                        unset($this->user['deleted']);
+                        $this->di->users->save($this->user);
+                        $this->di->session->set('user', $this->user);
                         if(!empty($values['forid'])){
                             $comment->countUp($values['type'], $values['forid']);
                         }

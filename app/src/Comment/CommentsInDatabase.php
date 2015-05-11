@@ -18,18 +18,6 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
         $this->query()->where("commenter = $commenter")->execute();
     }
 
-    public function findByTag($tag)
-    {
-        $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
-                FROM phpmvc_project_commentsindatabase
-                JOIN ".$pre."user
-                ON ".$pre."commentsindatabase.author=".$pre."user.acronym
-                WHERE tags LIKE '%,".$tag.",%';";
-        $this->db->execute($sql);
-        return $this->db->fetchAll();
-    }
-
     public function save($values=[], $key='id')
     {
         return parent::save($values, $key);
@@ -58,6 +46,22 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
         }
 
         $sql .=";";
+
+        $this->db->execute($sql);
+        return $this->db->fetchAll();
+    }
+
+    public function findLatest($limit)
+    {
+        $limit =$limit ? " LIMIT ".$limit : '';
+        $pre ='phpmvc_project_';
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+                FROM phpmvc_project_commentsindatabase
+                JOIN ".$pre."user
+                ON ".$pre."commentsindatabase.author=".$pre."user.acronym
+                WHERE ".$pre."commentsindatabase.type = 'question'
+                ORDER BY created DESC"
+                .$limit.";";
 
         $this->db->execute($sql);
         return $this->db->fetchAll();
@@ -93,20 +97,50 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 AND ".$pre."commentsindatabase.type = 'comment';";
         $this->db->execute($sql);
         $qares = array_merge($qares, $this->db->fetchAll());
-        print_r($qares);
         $qares =$this->qaSort($qares);
         return $qares;
     }
 
-    public function getColVals($col)
+    public function getColVals($col, $sort=true)
     {
         $this->query($col);
         $vals =$this->db->executeFetchAll();
         
-        if($col == 'tags'){
+        if($col == 'tags' && $sort){
             return $this->tagSort($vals);
         }
         return $vals;
+    }
+
+    public function findByTag($tag)
+    {
+        $pre ='phpmvc_project_';
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+                FROM phpmvc_project_commentsindatabase
+                JOIN ".$pre."user
+                ON ".$pre."commentsindatabase.author=".$pre."user.acronym
+                WHERE tags LIKE '%,".$tag.",%';";
+        $this->db->execute($sql);
+        return $this->db->fetchAll();
+    }
+
+    public function mostPopularTags($limit)
+    {
+        $tagArray = $this->getColVals('tags', false);
+        $counter =[];
+        foreach($tagArray as $tags){
+            $tmp =explode(',', $tags->tags);
+            foreach($tmp as $tag){
+                if(!isset($counter[$tag]) && !empty($tag)){
+                    $counter[$tag] =0;
+                }
+                if(!empty($tag)){
+                    $counter[$tag] += 1;
+                }
+            }
+        }
+        arsort($counter);
+        return array_keys(array_slice($counter, 0, $limit, true));
     }
 
     public function cleanTags($vals)

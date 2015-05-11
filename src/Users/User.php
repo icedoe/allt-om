@@ -24,7 +24,7 @@ class User extends \Anax\MVC\CDatabaseModel
 		$user =$this->find($name, 'acronym')->getProperties();
 		
 		//$pw=$user['password'];
-		echo $password;
+		//echo $password;
 
 
 		if(password_verify($password, $user['password'])){

@@ -18,21 +18,10 @@
 	$app->router->add('', function() use ($app){
 		$app->theme->setTitle("Allt om...");
 
-		$content = $app->fileContent->get('me.md');
-		$content = $app->textFilter->doFilter($content, 'shortcode, markdown');
-		$byline =$app->fileContent->get('byline.md');
-		$byline =$app->textFilter->doFilter($byline, 'markdown');
-
-		$app->views->add('me/page', [
-			'content' => $content,
-			'byline' => $byline,
-		],
-		'main');
-
 		$app->dispatcher->forward([
-			'controller' => 'sidebar',
-			'action' => 'index',
-			'params' => array($_POST),
+			'controller' => 'users',
+			'action' => 'start',
+			'params' => array($_POST, ''),
 			]);
 	});
 

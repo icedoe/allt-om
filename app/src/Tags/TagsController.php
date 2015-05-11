@@ -5,11 +5,17 @@ class TagsController implements \Anax\DI\IInjectionAware
 {
 	use \Anax\DI\TInjectionAware;
 
+	private $comments;
+
+	public function initialize()
+	{
+		$this->comments = new \Deg\Comment\CommentsInDatabase();
+		$this->comments->setDI($this->di);
+	}
+
 	public function indexAction()
 	{
-		$comments = new \Deg\Comment\CommentsInDatabase();
-		$comments->setDI($this->di);
-		$tags = $comments->getColVals('tags');
+		$tags = $this->comments->getColVals('tags');
 
 		$urls =[];
 		foreach($tags as $tag){
@@ -28,5 +34,26 @@ class TagsController implements \Anax\DI\IInjectionAware
             'action' => 'index',
             'params' => array($_POST, 'tags'),
             ]);
+	}
+
+	public function startAction($post, $calling)
+	{
+		$tags =$this->comments->mostPopularTags(5);
+print_r($tags);
+		$urls =[];
+		foreach($tags as $tag){
+			$urls[] =$this->di->url->create('comment/tag/'.$tag);
+		}
+
+		$this->di->views->add('tags/tags', [
+			'tags' => $tags,
+			'urls' => $urls],
+			'flash'
+		);
+		$this->di->dispatcher->forward([
+			'controller' => 'comment',
+			'action' => 'start',
+			'params' => [$post, $calling]
+			]);
 	}
 }
