@@ -22,6 +22,12 @@ $di->set('CommentController', function() use ($di) {
 		return $controller;
 	});
 
+$di->set('TagsController', function() use ($di) {
+		$controller = new \Deg\Tags\TagsController();
+		$controller->setDI($di);
+		return $controller;
+});
+
 $di->set('SidebarController', function() use ($di) {
 		$controller =new \Anax\Sidebar\SidebarController();
 		$controller->setDI($di);

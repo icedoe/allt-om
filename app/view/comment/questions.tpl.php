@@ -8,15 +8,17 @@
 	<tr>
 		<th>
 			#<?=$comment->id?>
+		</th>
 		<th>
 			<?=$comment->title?>
 		</th>
 	</tr>
 	<tr>
 		<td>
-			<img src='<?=$comment->image?>' alt='<?=$comment->author?>'>
+			<img src='<?=$comment->image?>' alt='<?=$comment->author?>'><br/>
 			<?=$comment->author?><br/>
 			<?=$comment->authortype?>
+		</td>
 		<td>
 			<p class='clear'><?=$comment->content?></p>
 		</td>

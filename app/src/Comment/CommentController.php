@@ -62,6 +62,22 @@ class CommentController implements \Anax\DI\IInjectionAware
             ]);
     }
 
+    public function tagAction($tag)
+    {
+        $all =$this->comments->findByTag($tag);
+        $this->di->theme->setTitle("Frågor med tag: $tag");
+
+        $this->views->add('comment/questions', [
+            'comments' => $all],
+            'main'
+            );
+        $this->dispatcher->forward([
+            'controller' => 'sidebar',
+            'action' => 'index',
+            'params' => array($_POST),
+            ]);
+    }
+
     /**
      * Controller function
      *
@@ -87,6 +103,11 @@ class CommentController implements \Anax\DI\IInjectionAware
                 'type'      =>'text',
                 'required'  =>true,
             ];
+            if($type == 'question'){
+                $array['tags'] = [
+                    'type'  =>'text',
+                ];
+            }
         }
 
         if($type == 'answer' || $type == 'comment'){
@@ -128,6 +149,9 @@ class CommentController implements \Anax\DI\IInjectionAware
                     ];
                     if($form->Value('title')){
                         $values['title'] =$form->Value('title');
+                    }
+                    if($form->Value('tags')){
+                        $values['tags'] =$comment->cleanTags($form->Value('tags'));
                     }
 
                     if($comment->save($values)){
@@ -178,6 +202,7 @@ class CommentController implements \Anax\DI\IInjectionAware
                 'title'     => ['varchar(80)'],
                 'author'    => ['varchar(80)', 'not null'],
                 'content'   => ['text', 'not null'],
+                'tags'      => ['varchar(100)'],
                 'type'      => ['varchar(80)', 'not null'],
                 'commentcount' => ['integer'],
                 'answercount' => ['integer'],

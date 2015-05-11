@@ -60,6 +60,12 @@ return [
             'url'   => $this->di->get('url')->create('comment'),
             'title' => 'Användarnas frågor'
         ],
+
+        'tags' => [
+            'text'  => 'Taggar',
+            'url'   => $this->di->get('url')->create('tags'),
+            'title' => 'Visa alla taggar',
+        ],
  
         // This is a menu item
         'users' => [

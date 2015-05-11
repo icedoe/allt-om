@@ -18,6 +18,18 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
         $this->query()->where("commenter = $commenter")->execute();
     }
 
+    public function findByTag($tag)
+    {
+        $pre ='phpmvc_project_';
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+                FROM phpmvc_project_commentsindatabase
+                JOIN ".$pre."user
+                ON ".$pre."commentsindatabase.author=".$pre."user.acronym
+                WHERE tags LIKE '%,".$tag.",%';";
+        $this->db->execute($sql);
+        return $this->db->fetchAll();
+    }
+
     public function save($values=[], $key='id')
     {
         return parent::save($values, $key);
@@ -80,10 +92,46 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 WHERE forid IN (".$str.")
                 AND ".$pre."commentsindatabase.type = 'comment';";
         $this->db->execute($sql);
-        $qares = array_merge($qares, $this->db->fetchall());
+        $qares = array_merge($qares, $this->db->fetchAll());
         print_r($qares);
         $qares =$this->qaSort($qares);
         return $qares;
+    }
+
+    public function getColVals($col)
+    {
+        $this->query($col);
+        $vals =$this->db->executeFetchAll();
+        
+        if($col == 'tags'){
+            return $this->tagSort($vals);
+        }
+        return $vals;
+    }
+
+    public function cleanTags($vals)
+    {
+        $vals =str_replace(['å', 'ä', 'ö'], ['a', 'a', 'o'], strtolower($vals));
+        $vals =explode(',', $vals);
+        foreach($vals as &$val){
+            trim($val);
+        }
+        return ','.implode(',', $vals).',';
+    }
+
+    private function tagSort($vals)
+    {
+        $array =[];
+        foreach($vals as $obj){
+            $tmp = explode(',', $obj->tags);
+            foreach($tmp as $val){
+                $val =trim($val);
+                if(!empty($val) && !in_array($val, $array)){
+                    $array[] =$val;
+                }
+            }
+        }
+        return $array;
     }
 
     private function qaSort($qares)
@@ -91,9 +139,11 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
         $qa =[];
         foreach($qares as $obj){
             if($obj->type != 'comment'){
-                $qa[$obj->id] =[$obj];
+                $id =$obj->id;
+                $qa[$id] =[$obj];
             }else{
-                $qa[$obj->forid][] = $obj;
+                $id =$obj->forid;
+                $qa[$id][] = $obj;
             }
         }
         return $qa;
