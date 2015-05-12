@@ -10,7 +10,10 @@
 			#<?=$comment->id?>
 		</th>
 		<th>
-			<?=$comment->title?>
+			<?=$comment->title?><br/>
+			<?php foreach($comment->tags as $tag) : ?>
+				<a class='tag' href='<?php echo $this->di->url->create("comment/tag/$tag")?>'><?=$tag?></a>
+			<?php endforeach; ?>
 		</th>
 	</tr>
 	<tr>

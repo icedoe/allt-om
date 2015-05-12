@@ -5,6 +5,7 @@ class CDatabaseModel implements \Anax\di\IInjectionAware
 {
 	use \Anax\DI\TInjectable;
 
+	
 	/**
 	 *Get table name
 	 */

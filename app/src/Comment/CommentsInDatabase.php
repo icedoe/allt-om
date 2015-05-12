@@ -48,7 +48,15 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
         $sql .=";";
 
         $this->db->execute($sql);
-        return $this->db->fetchAll();
+        $all = $this->db->fetchAll();
+        foreach($all as &$post)
+        {
+            if(empty($post->tags)){
+                continue;
+            }
+            $post->tags = $this->tagSort([$post]);
+        }
+        return $all;
     }
 
     public function findLatest($limit)
@@ -64,7 +72,15 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 .$limit.";";
 
         $this->db->execute($sql);
-        return $this->db->fetchAll();
+        $all = $this->db->fetchAll();
+        foreach($all as &$post)
+        {
+            if(empty($post->tags)){
+                continue;
+            }
+            $post->tags = $this->tagSort([$post]);
+        }
+        return $all;
     }
 
     public function findFullDisplay($id)
@@ -98,6 +114,14 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
         $this->db->execute($sql);
         $qares = array_merge($qares, $this->db->fetchAll());
         $qares =$this->qaSort($qares);
+        foreach($qares as &$qa){
+            foreach($qa as &$post){
+                if(empty($post->tags)){
+                    continue;
+                }
+                $post->tags = $this->tagSort([$post]);
+            }
+        }
         return $qares;
     }
 
@@ -121,7 +145,15 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 ON ".$pre."commentsindatabase.author=".$pre."user.acronym
                 WHERE tags LIKE '%,".$tag.",%';";
         $this->db->execute($sql);
-        return $this->db->fetchAll();
+        $all = $this->db->fetchAll();
+        foreach($all as &$post)
+        {
+            if(empty($post->tags)){
+                continue;
+            }
+            $post->tags = $this->tagSort([$post]);
+        }
+        return $all;
     }
 
     public function mostPopularTags($limit)
@@ -148,7 +180,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
         $vals =str_replace(['å', 'ä', 'ö'], ['a', 'a', 'o'], strtolower($vals));
         $vals =explode(',', $vals);
         foreach($vals as &$val){
-            trim($val);
+            $val =trim($val);
         }
         return ','.implode(',', $vals).',';
     }

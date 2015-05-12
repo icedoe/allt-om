@@ -65,7 +65,8 @@ class CommentController implements \Anax\DI\IInjectionAware
     public function viewAction($id)
     {
         $all = $this->comments->findFullDisplay($id);
-        
+
+        print_r($all);
         $this->di->theme->setTitle('Fråga: '.$id);
         $this->views->add('comment/comments', [
             'comments' => $all ],

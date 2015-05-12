@@ -4,6 +4,7 @@ namespace Anax\Users;
 class User extends \Anax\MVC\CDatabaseModel
 {
 
+
 	public function find($id, $key='id')
 	{
 		return parent::find($id, $key);
@@ -27,7 +28,7 @@ class User extends \Anax\MVC\CDatabaseModel
 		//echo $password;
 
 
-		if(password_verify($password, $user['password'])){
+		if(password_verify($password, $user['password']) && $user['deleted'] == 'false'){
 			$this->di->session->set('user', $user);
 
 		}
@@ -65,6 +66,6 @@ class User extends \Anax\MVC\CDatabaseModel
 	public function gravUrl($email)
 	{
 		$hash =md5(strtolower(trim($email)));
-		return 'http://www.gravatar.com/avatar/'.$hashs;
+		return 'http://www.gravatar.com/avatar/'.$hash;
 	}
 }

@@ -8,7 +8,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function indexAction()
 	{
-		$this->di->users->query()->where('deleted is null');
+		$this->di->users->query()->where("deleted ='false'");
 		$all = $this->di->users->execute();
 		$users=[];
 		$n=-1;
@@ -34,7 +34,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function startAction($post, $calling)
 	{
-		$all =$this->di->users->query()->orderBy('posted')->limit(4)->execute();
+		$all =$this->di->users->query()->where("deleted = 'false'")->orderBy('posted')->limit(4)->execute();
 
 		$this->views->add('users/list-all', [
 			'users' => [$all],
@@ -47,42 +47,9 @@ class UsersController implements \Anax\DI\IInjectionAware
 			]);
 	}
 
-	public function activeAction()
-	{
-		$all =$this->di->users->query()
-			->where('active IS NOT NULL')
-			->andWhere('deleted IS NULL')
-			->execute();
-
-		$this->theme->setTitle("Visa alla aktiva");
-		$this->views->add('users/list-all', [
-			'users' => $all,
-			'title' => "Alla aktiva användare",
-		]);
-	}
-
-	public function inactiveAction()
-	{
-		$all =$this->di->users->query()->where('active IS NULL')->execute();
-
-		$this->theme->setTitle("Inaktiva användare");
-		$this->views->add('users/list-all', [
-			'users' => $all,
-			'title' => "Alla inaktiva användare"]);
-	}
-
-	public function deletedAction()
-	{
-		$all =$this->di->users->query()
-			->where('deleted IS NOT NULL')
-			->execute();
-
-		$this->theme->setTitle("Mjukraderade användare");
-		$this->views->add('users/list-all', [
-			'users' => $all,
-			'title' => "Alla mjukt raderade användare",
-		]);
-	}
+	
+	
+	
 
 	public function idAction($id=null)
 	{
@@ -99,7 +66,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 		$this->di->dispatcher->forward([
 			'controller' => 'comment',
-			'action' => '',
+			'action' => 'index',
 			'params' => [$_POST, 'users', $user['acronym']],
 			]
 		);
@@ -215,49 +182,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 			'content' => $form->getHTML()]);
 	}
 	
-	public function activateAction($id=0)
-	{
-		$users =$this->di->users->query()->where('active IS NULL')->execute();
-
-		$form =$this->getIdSelect('Aktivera', $users);
-
-		if($form->check()){
-			$id =$this->di->request->getPost('users');
-			$user =$this->di->users->find($id);
-
-			$now =gmdate('Y-m-d H:i:s');
-			$user->active =$now;
-			$user->updated =$now;
-			$user->deleted =null;
-
-			$user->save();
-			$url =$this->di->url->create('users/id/'.$id);
-			$this->response->redirect($url);
-		}
-		$this->views->add('me/page', ['content' => $form->getHtml()]);
-	}
-
-	public function deactivateAction()
-	{
-		$users = $this->di->users->query()->where('active IS NOT NULL')->execute();
-
-		$form =$this->getIdSelect('Inaktivera', $users);
-
-		if($form->check()){
-			$id =$this->di->request->getPost('users');
-			$user =$this->di->users->find($id);
-
-			$now =gmdate('Y-m-d H:i:s');
-			$user->active =null;
-			$user->updated =$now;
-
-			$user->save();
-			$url =$this->di->url->create('users/id/'.$this->users->id);
-			$this->response->redirect($url);
-		}
-		$this->views->add('me/page', ['content' =>$form->getHTML()]);
-	}
-
+	
 	public function deleteAction()
 	{
 //		$id =$this->di->request->getPost('users');
@@ -300,34 +225,21 @@ class UsersController implements \Anax\DI\IInjectionAware
 				$this->doSoftDelete($id);
 			}
 		}
-		$users =$this->di->users->query()->where("'deleted' = null")->execute();
-
-		$form =$this->getIdSelect('Radera', $users);
-
-		$content =null;
-
-		if($form->check()){
-			$form->addOutput('Användare raderad');
-			$id =$this->di->request->getPost('users');
-			$this->doSoftDelete($id);
-			
-		}
 		
-		$this->views->add('me/page', [
-			'content' => $form->getHTML()]);
 	}
 
 	public function undoDeleteAction($id=null)
 	{
-		$users =$this->di->users->query()->where("deleted IS NOT NULL")->execute();
+		$users =$this->di->users->query()->where("deleted = 'true'")->execute();
+		print_r($users);
 
 		$form =$this->getIdSelect('Återställ', $users);
 
 		if($form->check()){
 			$id =$this->di->request->getpost('users');
-			$user =$this->di->users->find($id);
-			$user->deleted =null;
-			$user->save();
+			$this->di->db->update('User', ['deleted'], ['false'], 'id='.$id);
+			$this->di->db->execute();
+			
 		
 			$url =$this->url->create('users/id/'.$id);
 			$this->response->redirect($url);
@@ -356,7 +268,7 @@ class UsersController implements \Anax\DI\IInjectionAware
     	        'type'		=> ['varchar(20)'],
     	        'created'   => ['datetime'],
     	        'updated'   => ['datetime'],
-    	        'deleted'   => ['datetime'],
+    	        'deleted'   => ['varchar(5)', "default 'false'"],
     	        'active'    => ['datetime'],
 	        ]
 	    );
@@ -489,9 +401,9 @@ class UsersController implements \Anax\DI\IInjectionAware
         return $form;
 	}
 
-	public function getIdSelect($act, $users=false)
+	public function getIdSelect($act, $users)
 	{
-		$all =$users ? $users : $this->users->findAll();
+		$all =$users;
 			
 			$options =['default' => 'Välj användare'];
 			foreach($all as $user){
@@ -515,10 +427,9 @@ class UsersController implements \Anax\DI\IInjectionAware
 	}
 	private function doSoftDelete($id)
 	{
-		$user =$this->di->users->find($id);
 			$now =gmdate('Y-m-d H:i:s');
-			$user->deleted =$now;
-			$user->save();
+			$this->di->db->update('User', ['deleted', 'updated'], ['true', $now], 'id='.$id);
+			$this->di->db->execute();
 			$url =$this->url->create('users/id/'.$id);
 			$this->response->redirect($url);
 	}
