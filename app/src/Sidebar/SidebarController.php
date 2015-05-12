@@ -94,16 +94,14 @@ class SidebarController implements \Anax\DI\IInjectionAware
 		//Question
 		$array['Ställ fråga'] = $this->di->url->create('comment/edit');
 		//profile
-		if($this->calling == 'users' && $this->modifier == $this->user['id']) {
+		if($this->calling == 'users' && $this->modifier == $this->user['acronym']) {
 			$array['Redigera profil'] = $this->di->url->create('users/update');
 			$array['Avregistera'] = $this->di->url->create('users/soft-delete/'.$this->user['id']);
 		} else {
 			$array['Min profil'] =$this->di->url->create('users/id');
 		}
 		
-		//tracked subjects
-		$array['Bevakning'] =$this->di->url->create('users/tracked');
-
+		
 		//logout
 		$array['Logga ut'] =$this->di->url->create('users/logout');
 

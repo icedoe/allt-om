@@ -111,6 +111,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 				'acronym' => $this->di->form->Value('acronym'),
 				'email' => $this->di->form->Value('email'),
 				'name' => $this->di->form->Value('name'),
+				'image' =>$this->di->users->gravUrl($this->di->form->Value('email')),
 				'password' => password_hash($this->di->form->Value('password'), PASSWORD_DEFAULT),
 				'type' => 'user',
 				'created' => $now,
@@ -118,7 +119,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 			];
 
 			if($this->di->users->save($user)){
-				$this->di->users->login($user['name'], $user['password']);
+				$this->di->users->login($user['acronym'], $this->di->form->Value('password'));
 
 				$url = $this->di->url->create('users/id/'.$this->di->users->id);
 				$this->response->redirect($url);
@@ -220,10 +221,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 	public function softDeleteAction($id=null)
 	{
 		if($id){
-			$u = $this->di->session->get('user');
-			if($u['type'] == 'admin'){
-				$this->doSoftDelete($id);
-			}
+			$this->doSoftDelete($id);
 		}
 		
 	}
@@ -430,6 +428,10 @@ class UsersController implements \Anax\DI\IInjectionAware
 			$now =gmdate('Y-m-d H:i:s');
 			$this->di->db->update('User', ['deleted', 'updated'], ['true', $now], 'id='.$id);
 			$this->di->db->execute();
+			$u = $this->di->session->get('user');
+			if($u['id'] == $id){
+				$this->di->users->logout('user');
+			}
 			$url =$this->url->create('users/id/'.$id);
 			$this->response->redirect($url);
 	}
