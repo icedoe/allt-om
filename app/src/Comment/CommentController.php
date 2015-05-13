@@ -30,6 +30,11 @@ class CommentController implements \Anax\DI\IInjectionAware
         
         $all = $this->comments->findForDisplay($user);
         
+        foreach($all as &$q){
+            $q->title =htmlentities($q->title);
+            $q->author =htmlentities($q->author);
+            $q->content =$this->di->textFilter->doFilter(htmlentities($q->content), 'markdown');
+        }
 
         //
         
@@ -50,6 +55,12 @@ class CommentController implements \Anax\DI\IInjectionAware
     {
         $all = $this->comments->findLatest(5);
 
+        foreach($all as &$q){
+            $q->title =htmlentities($q->title);
+            $q->author =htmlentities($q->author);
+            $q->content =$this->di->textFilter->doFilter(htmlentities($q->content), 'markdown');
+        }
+
         $this->di->views->add('comment/questions', [
             'comments' => $all],
             'main'
@@ -65,6 +76,14 @@ class CommentController implements \Anax\DI\IInjectionAware
     public function viewAction($id)
     {
         $all = $this->comments->findFullDisplay($id);
+
+        foreach($all as &$some){
+            foreach($some as &$q){
+            $q->title =htmlentities($q->title);
+            $q->author =htmlentities($q->author);
+            $q->content =$this->di->textFilter->doFilter(htmlentities($q->content), 'markdown');
+        }
+        }
 
         print_r($all);
         $this->di->theme->setTitle('Fråga: '.$id);
@@ -174,7 +193,11 @@ class CommentController implements \Anax\DI\IInjectionAware
                     if($comment->save($values)){
                         $done =true;
                         $this->user['posted'] =empty($this->user['posted']) ? 1 : $this->user['posted']+1;
-                        unset($this->user['deleted']);
+                        foreach($this->user as $key => $val){
+                            if(empty($val)){
+                                unset($this->user[$key]);
+                            }
+                        }
                         $this->di->users->save($this->user);
                         $this->di->session->set('user', $this->user);
                         if(!empty($values['forid'])){
@@ -184,14 +207,14 @@ class CommentController implements \Anax\DI\IInjectionAware
                     break;
 
                 default:
+                    $form->addOutput('Kunde inte spara');
                     $form->saveInSession =true;
                     $done=false;
                     break;
-            }$this->di->db->dump();
-            if($done){
-                $form->addOutput("Klar");
-                $this->redirectTo($this->di->url->create('comment'));
             }
+            if($done){
+                $this->redirectTo($this->di->url->create('comment'));
+            } 
             $this->di->views->add('me/page', [
                 'content' => $form->getHTML(),
                 'id' => $id]);

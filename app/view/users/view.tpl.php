@@ -1,5 +1,14 @@
-<h1>Användare: <?= $user['id'] ?></h1>
-<p>Namn: <?= $user['name'] ?></p>
-<p>Akronym: <?= $user['acronym'] ?></p>
-<p>Aktiv: <?= $user['active'] ?></p>
-<p>Tillagd: <?= $user['created'] ?></p>
+<div class='user'>
+	<h1>Profil #<?=$user['id']?></h1>
+	<img src='<?=$user['image']?>' alt="Profilbild för <?=$user['acronym']?>">
+	<h2><?= $user['acronym'] ?></h2>
+	<span class='shortdesc'><?=$user['shortdesc']?></span>
+	<?=$user['description']?>
+	<div class='infoRow'>
+		<p>
+			Inlägg: <?= $user['posted'] ?>&nbsp;
+			Medlem sedan: <?= $user['created'] ?>&nbsp;
+			Email: <?=$user['email']?>
+		</p>
+	</div>
+</div>

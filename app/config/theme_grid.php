@@ -25,8 +25,8 @@ return [
             'region' =>     'header',
             'template' =>   'me/header',
             'data' =>       [
-                'siteTitle' => "Min temasida i PHPMVC",
-                'siteTagline' => "Med viss hjälp av guider",
+                'siteTitle' => "Allt om Konspirationen",
+                'siteTagline' => "Alla sanningar",
                 ],
             'sort' => -1
         ],

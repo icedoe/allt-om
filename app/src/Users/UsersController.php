@@ -16,6 +16,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 			if(($key+1)%4 == 1){
 				$users[++$n] =[];
 			}
+			$user->shortdesc =$this->di->textFilter->doFilter(htmlentities($user->shortdesc), 'markdown');
 			$users[$n][] =$user;
 		}
 
@@ -35,6 +36,9 @@ class UsersController implements \Anax\DI\IInjectionAware
 	public function startAction($post, $calling)
 	{
 		$all =$this->di->users->query()->where("deleted = 'false'")->orderBy('posted')->limit(4)->execute();
+		foreach($all as &$user){
+			$user->shortdesc =$this->di->textFilter->doFilter(htmlentities($user->shortdesc), 'markdown');
+		}
 
 		$this->views->add('users/list-all', [
 			'users' => [$all],
@@ -55,6 +59,9 @@ class UsersController implements \Anax\DI\IInjectionAware
 	{
 		$user =$id ? $this->di->users->find($id)->getProperties() : $this->di->session->get('user');
 		$id =$id ? $id : $user['id'];
+
+		$user['shortdesc'] =$this->di->textFilter->doFilter(htmlentities($user['shortdesc']), 'markdown');
+		$user['description'] =$this->di->textFilter->doFilter(htmlentities($user['description']), 'markdown');
 
 		$this->theme->setTitle("Visa användare");
 		$this->views->add('users/view', [
@@ -111,6 +118,8 @@ class UsersController implements \Anax\DI\IInjectionAware
 				'acronym' => $this->di->form->Value('acronym'),
 				'email' => $this->di->form->Value('email'),
 				'name' => $this->di->form->Value('name'),
+				'shortdesc' => $this->di->request->getPost('shortdesc'),
+				'description' => $this->di->request->getPost('description'),
 				'image' =>$this->di->users->gravUrl($this->di->form->Value('email')),
 				'password' => password_hash($this->di->form->Value('password'), PASSWORD_DEFAULT),
 				'type' => 'user',

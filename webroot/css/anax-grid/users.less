@@ -1,13 +1,15 @@
+/* Users tab */
+
 .userTableRow {
 	.clearfix();
 }
 
 .userTable {
 	display: table-cell;
-	width: 25%;
-	margin: 5px;
+	width: 23.5%;
+	margin: 0.75%;
 
-	height: 3*@magicNumber;
+	height: 2.8*@magicNumber;
 	overflow: hidden;
 	table{
 		height: 100%;
@@ -22,8 +24,8 @@
 		
 		width: 25%;
 		vertical-align: middle;
-		
-		background-color: blue;
+		color: black;
+		background-color: #758175;
 
 		* {
 			margin-bottom: 0;
@@ -44,5 +46,28 @@
 		hr {
 			margin: 0;
 		}
+	}
+}
+
+/* User profile */
+
+.user {
+	h1 {
+		text-align: center;
+	}
+	h2 {
+		margin-top: 0;
+		
+	}
+	img {
+		margin: 10px;
+		float:left;
+	}
+	.infoRow {
+		border-top: 1px dotted white;
+		font-size: smaller;
+	}
+	.shortdesc {
+		font-style: italic;
 	}
 }

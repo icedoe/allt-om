@@ -16,14 +16,14 @@
 						<hr />
 						<h6><?=$user->type?></h6>
 					</td>
-					<td>
-						Postat: <?=$user->posted?>
-						<br /><br />
-						Poäng: <?=$user->points?>
-					</td>
+					
 				</tr>
 				<tr>
-					<td colspan="4"><p><?=$user->shortdesc?></p></td>
+					<td colspan='2'>
+						Postat: <?=$user->posted?>
+						&nbsp;
+						Email: <?=$user->email?>
+					</td>
 				</tr>
 			</table>
 			</a>

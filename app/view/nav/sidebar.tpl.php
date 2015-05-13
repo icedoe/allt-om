@@ -1,7 +1,7 @@
-<h4>Nåt grejs här</h4>
+<h6>Användarmeny</h6>
 <?php if(isset($user)): ?>
 	<div>
-		<?=$user['name'] ?>
+		<?=$user['acronym'] ?>
 	</div>
 <?php endif; ?>
 <?php if(isset($form)): ?>
@@ -11,9 +11,9 @@
 <?php endif; ?>
 <?php if(isset($menu)): ?>
 	<div>
-		<ul>
+		<ul class='fa-ul'>
 		<?php foreach($menu as $key => $item): ?>
-			<li><a href='<?=$item?>'><?=$key?></a></li>
+			<li><a href='<?=$item['url']?>'><?=$item['icon'].$key?></a></li>
 		<?php endforeach; ?>
 		</ul>
 	</div>

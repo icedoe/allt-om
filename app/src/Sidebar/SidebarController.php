@@ -79,9 +79,9 @@ class SidebarController implements \Anax\DI\IInjectionAware
 		$url =$this->di->url->create('users/add');
 		$html =
 			"<form method='post'>
-				<input type='text' name='username' label='Akronym' required='true' />
-				<input type='password' name='password' label='Lösenord' required='true' />
-				<input type='submit' name='doLogin' />
+				<input type='text' name='username' placeholder='Akronym' required='true' /><br />
+				<input type='password' name='password' placeholder='Lösenord' required='true' /><br />
+				<input type='submit' name='doLogin' value='Logga in' /><br />
 				<a href='".$url."'>Eller skapa konto</a>
 			</form>";
 		return $html;
@@ -92,18 +92,33 @@ class SidebarController implements \Anax\DI\IInjectionAware
 		$array =[];
 		
 		//Question
-		$array['Ställ fråga'] = $this->di->url->create('comment/edit');
+		$array['Ställ fråga'] = [
+			'icon' => "<i class='fa-li fa fa-plus'></i>",
+			'url' => $this->di->url->create('comment/edit')
+			];
 		//profile
 		if($this->calling == 'users' && $this->modifier == $this->user['acronym']) {
-			$array['Redigera profil'] = $this->di->url->create('users/update');
-			$array['Avregistera'] = $this->di->url->create('users/soft-delete/'.$this->user['id']);
+			$array['Redigera profil'] = [
+				'icon' => "<i class='fa-li fa fa-pencil'></i>",
+				'url' =>$this->di->url->create('users/update')
+				];
+			$array['Avregistera'] = [
+				'icon' => "<i class='fa-li fa fa-ban'></i>",
+				'url' => $this->di->url->create('users/soft-delete/'.$this->user['id'])
+				];
 		} else {
-			$array['Min profil'] =$this->di->url->create('users/id');
+			$array['Min profil'] = [
+				'icon' => "<i class='fa-li fa fa-user'></i>",
+				'url' => $this->di->url->create('users/id')
+			];
 		}
 		
 		
 		//logout
-		$array['Logga ut'] =$this->di->url->create('users/logout');
+		$array['Logga ut'] = [
+			'icon' => "<i class='fa-li fa fa-sign-out'></i>",
+			'url' => $this->di->url->create('users/logout')
+			];
 
 		return $array;
 	}
@@ -113,25 +128,40 @@ class SidebarController implements \Anax\DI\IInjectionAware
 		$menu =$this->getUserMenu();
 
 		unset($menu['Logga ut']);
-		$menu['Återställ raderad'] = $this->di->url->create('users/undo-delete');
+		$menu['Återställ raderad'] = [
+			'icon' => "<i class='fa-li fa fa-medkit'></i>",
+			'url' => $this->di->url->create('users/undo-delete')
+			];
 
 		if($this->calling){
 			switch($this->calling) {
 				case 'users':
 					if($this->modifier){
-						if($this->modifier != $this->user['id']){
-							$menu['Ta bort'] = $this->di->url->create('users/soft-delete/'.$this->modifier);
-							$menu['Utse admin'] = $this->di->url->create('users/update/'.$this->modifier.'/admin');
+						if($this->modifier != $this->user['acronym']){
+							$menu['Ta bort'] = [
+							'icon' => "<i class='fa-li fa fa-ban'></i>",
+							'url' => $this->di->url->create('users/soft-delete/'.$this->modifier)
+							];
+							$menu['Utse admin'] = [
+								'icon' => "<i class='fa-li fa fa-angle-double-up'></i>",
+								'url' => $this->di->url->create('users/update/'.$this->modifier.'/admin')
+								];
 						}
 					}
 					break;
 				case 'comment':
 					if($this->modifier){
-						$menu['Ta bort'] = $this->di->url->create('comment/soft-delete/'.$this->modifier);
+						$menu['Ta bort'] = [
+							'icon' => "<i class='fa-li fa fa-trash'></i>",
+							'url' => $this->di->url->create('comment/soft-delete/'.$this->modifier)
+							];
 					}
 			}
 		}
-		$menu['Logga ut'] = $this->di->url->create('users/logout');
+		$menu['Logga ut'] = [
+			'icon' => "<i class='fa-li fa fa-sign-out'></i>",
+			'url' => $this->di->url->create('users/logout')
+			];
 		return $menu;
 	}
 }

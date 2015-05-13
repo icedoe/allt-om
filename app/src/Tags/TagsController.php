@@ -39,7 +39,7 @@ class TagsController implements \Anax\DI\IInjectionAware
 	public function startAction($post, $calling)
 	{
 		$tags =$this->comments->mostPopularTags(5);
-print_r($tags);
+
 		$urls =[];
 		foreach($tags as $tag){
 			$urls[] =$this->di->url->create('comment/tag/'.$tag);

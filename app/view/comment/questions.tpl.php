@@ -1,40 +1,40 @@
-<hr>
-<h2>Frågor</h2>
+
+
 
 <?php if (is_array($comments)) : ?>
-<div class='mess'>
-<table>
+<div class='messages'>
+
 <?php foreach ($comments as $id => $comment) : ?>
-	<tr>
-		<th>
-			#<?=$comment->id?>
-		</th>
-		<th>
-			<?=$comment->title?><br/>
-			<?php foreach($comment->tags as $tag) : ?>
-				<a class='tag' href='<?php echo $this->di->url->create("comment/tag/$tag")?>'><?=$tag?></a>
-			<?php endforeach; ?>
-		</th>
-	</tr>
-	<tr>
-		<td>
-			<img src='<?=$comment->image?>' alt='<?=$comment->author?>'><br/>
-			<?=$comment->author?><br/>
-			<?=$comment->authortype?>
-		</td>
-		<td>
-			<p class='clear'><?=$comment->content?></p>
-		</td>
-		<td>
+
+	<div class='mess <?=$comment->type?>'>
+
+		<aside class='user'>
+			<img src='<?=$comment->image?>' alt='<?=$comment->author?>'>
+			<p>
+				<?=$comment->author?><br/>
+				<?=$comment->authortype?>
+			</p>
+		</aside>
+
+		<aside class='options'>
 			Kommentarer: <?=$comment->commentcount?><br/>
 			Svar: <?=$comment->answercount?><br/>
 			<a href ='<?php echo $this->di->url->create("comment/view/$comment->id") ?>'>Visa</a>
-		</td>
-	</tr>
-	
+		</aside>
 
+		<div class='content'>
+			<h2><?=$comment->title?></h2>
+			<?php foreach($comment->tags as $tag) : ?>
+				<a class='tag' href='<?php echo $this->di->url->create("comment/tag/$tag")?>'><?=$tag?></a>
+			<?php endforeach; ?>
+			<hr class='indiv' />
+			<?=$comment->content?>
+		</div>
+
+		<hr class='clear' />
+
+	</div>
 <?php endforeach; ?>
-</table>
 
 </div>
 <?php endif; ?>

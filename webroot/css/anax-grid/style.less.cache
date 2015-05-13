@@ -1,4 +1,4 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:40372:"html {
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:41280:"html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -579,6 +579,8 @@ hr {
 }
 #footer {
   background-color: #333;
+  position: relative;
+  bottom: 22px;
 }
 .left {
   float: left;
@@ -2576,9 +2578,9 @@ figure.rounded img {
 }
 .userTable {
   display: table-cell;
-  width: 25%;
-  margin: 5px;
-  height: 66px;
+  width: 23.5%;
+  margin: 0.75%;
+  height: 61.6px;
   overflow: hidden;
 }
 .userTable table {
@@ -2593,7 +2595,8 @@ figure.rounded img {
   font-size: 8.8px;
   width: 25%;
   vertical-align: middle;
-  background-color: blue;
+  color: black;
+  background-color: #758175;
 }
 .userTable td * {
   margin-bottom: 0;
@@ -2613,4 +2616,63 @@ figure.rounded img {
 .userTable td hr {
   margin: 0;
 }
-";s:5:"files";a:25:{s:76:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\style.less";i:1430898327;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\normalize.less";i:1430397069;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\variables.less";i:1430397068;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\mixins.less";i:1430397070;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\css3mixins.less";i:1430397070;s:75:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\grid.less";i:1430397070;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\typography.less";i:1430397068;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\structure.less";i:1430900094;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\navbar.less";i:1430897781;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\figure.less";i:1430397070;s:107:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\font-awesome.less";i:1430397076;s:104:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\variables.less";i:1430397075;s:101:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\mixins.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\path.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\core.less";i:1430397077;s:101:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\larger.less";i:1430397076;s:106:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\fixed-width.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\list.less";i:1430397076;s:110:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\bordered-pulled.less";i:1430397077;s:103:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\animated.less";i:1430397077;s:110:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\rotated-flipped.less";i:1430397076;s:102:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\stacked.less";i:1430397075;s:100:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\icons.less";i:1430397076;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\responsive.less";i:1430397069;s:76:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\users.less";i:1430908996;}s:7:"updated";i:1430908998;}
+.user h1 {
+  text-align: center;
+}
+.user h2 {
+  margin-top: 0;
+}
+.user img {
+  margin: 10px;
+  float: left;
+}
+.user .infoRow {
+  border-top: 1px dotted white;
+  font-size: smaller;
+}
+.user .shortdesc {
+  font-style: italic;
+}
+.messages {
+  padding: 1%;
+}
+.messages br.clear {
+  clear: both;
+}
+.messages .indiv {
+  margin: 0;
+}
+.messages .user {
+  float: left;
+}
+.messages .user p {
+  margin-left: 15%;
+}
+.messages .options {
+  float: right;
+}
+.messages .content {
+  float: left;
+}
+.messages .question {
+  background-color: #758175;
+  width: 100%;
+}
+.messages .comment {
+  width: 80%;
+  position: relative;
+  left: 20%;
+  background-color: #999999;
+}
+.messages .answer {
+  background-color: #A47C67;
+}
+.tag {
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: #444444;
+  text-decoration: none;
+  font-style: bold;
+  color: #A47C67;
+}
+";s:5:"files";a:26:{s:76:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\style.less";i:1431502972;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\normalize.less";i:1430397069;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\variables.less";i:1430397068;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\mixins.less";i:1430397070;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\css3mixins.less";i:1430397070;s:75:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\grid.less";i:1430397070;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\typography.less";i:1430397068;s:80:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\structure.less";i:1431511627;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\navbar.less";i:1430897781;s:77:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\figure.less";i:1430397070;s:107:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\font-awesome.less";i:1430397076;s:104:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\variables.less";i:1430397075;s:101:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\mixins.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\path.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\core.less";i:1430397077;s:101:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\larger.less";i:1430397076;s:106:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\fixed-width.less";i:1430397076;s:99:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\list.less";i:1430397076;s:110:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\bordered-pulled.less";i:1430397077;s:103:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\animated.less";i:1430397077;s:110:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\rotated-flipped.less";i:1430397076;s:102:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\stacked.less";i:1430397075;s:100:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\font-awesome-4.3.0\less\icons.less";i:1430397076;s:81:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\responsive.less";i:1430397069;s:76:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\users.less";i:1431517704;s:79:"C:\xampp\htdocs\Skolgrejs\gitclones\allt-om\webroot\css\anax-grid\comments.less";i:1431514123;}s:7:"updated";i:1431517706;}

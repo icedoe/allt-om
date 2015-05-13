@@ -579,6 +579,8 @@ hr {
 }
 #footer {
   background-color: #333;
+  position: relative;
+  bottom: 22px;
 }
 .left {
   float: left;
@@ -2576,9 +2578,9 @@ figure.rounded img {
 }
 .userTable {
   display: table-cell;
-  width: 25%;
-  margin: 5px;
-  height: 66px;
+  width: 23.5%;
+  margin: 0.75%;
+  height: 61.6px;
   overflow: hidden;
 }
 .userTable table {
@@ -2593,7 +2595,8 @@ figure.rounded img {
   font-size: 8.8px;
   width: 25%;
   vertical-align: middle;
-  background-color: blue;
+  color: black;
+  background-color: #758175;
 }
 .userTable td * {
   margin-bottom: 0;
@@ -2612,4 +2615,63 @@ figure.rounded img {
 }
 .userTable td hr {
   margin: 0;
+}
+.user h1 {
+  text-align: center;
+}
+.user h2 {
+  margin-top: 0;
+}
+.user img {
+  margin: 10px;
+  float: left;
+}
+.user .infoRow {
+  border-top: 1px dotted white;
+  font-size: smaller;
+}
+.user .shortdesc {
+  font-style: italic;
+}
+.messages {
+  padding: 1%;
+}
+.messages br.clear {
+  clear: both;
+}
+.messages .indiv {
+  margin: 0;
+}
+.messages .user {
+  float: left;
+}
+.messages .user p {
+  margin-left: 15%;
+}
+.messages .options {
+  float: right;
+}
+.messages .content {
+  float: left;
+}
+.messages .question {
+  background-color: #758175;
+  width: 100%;
+}
+.messages .comment {
+  width: 80%;
+  position: relative;
+  left: 20%;
+  background-color: #999999;
+}
+.messages .answer {
+  background-color: #A47C67;
+}
+.tag {
+  padding-right: 5px;
+  padding-left: 5px;
+  background-color: #444444;
+  text-decoration: none;
+  font-style: bold;
+  color: #A47C67;
 }
