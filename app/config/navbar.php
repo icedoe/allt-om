@@ -13,47 +13,12 @@ return [
 
         // This is a menu item
         'home'  => [
-            'text'  => 'Home',
+            'text'  => 'Hem',
             'url'   => $this->di->get('url')->create(''),
             'title' => 'Home route of current frontcontroller'
         ],
  
-        // This is a menu item
-        'test'  => [
-            'text'  => 'Submenu',
-            'url'   => $this->di->get('url')->create('submenu'),
-            'title' => 'Submenu with url as internal route within this frontcontroller',
-
-            // Here we add the submenu, with some menu items, as part of a existing menu item
-            'submenu' => [
-
-                'items' => [
-
-                    // This is a menu item of the submenu
-                    'item 0'  => [
-                        'text'  => 'Item 0',
-                        'url'   => $this->di->get('url')->create('submenu/item-0'),
-                        'title' => 'Url as internal route within this frontcontroller'
-                    ],
-
-                    // This is a menu item of the submenu
-                    'item 2'  => [
-                        'text'  => '/humans.txt',
-                        'url'   => $this->di->get('url')->asset('/humans.txt'),
-                        'title' => 'Url to sitespecific asset',
-                        'class' => 'italic'
-                    ],
-
-                    // This is a menu item of the submenu
-                    'item 3'  => [
-                        'text'  => 'humans.txt',
-                        'url'   => $this->di->get('url')->asset('humans.txt'),
-                        'title' => 'Url to asset relative to frontcontroller',
-                    ],
-                ],
-            ],
-        ],
-
+        
          // This is a menu item
         'comments' => [
             'text'  =>'Frågor',
@@ -74,7 +39,11 @@ return [
             'title' => 'Visa registrerade användare',
         ],
 
-       
+       'about' => [
+        'text'      => 'Om',
+        'url'       => $this->di->get('url')->create('about'),
+        'title'     => 'Om sidan'
+        ],
     ],
  
 

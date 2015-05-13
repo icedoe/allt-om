@@ -16,7 +16,7 @@
 
 
 	$app->router->add('', function() use ($app){
-		$app->theme->setTitle("Allt om...");
+		$app->theme->setTitle("Allt om Konspirationen");
 
 		$app->dispatcher->forward([
 			'controller' => 'users',
@@ -25,7 +25,15 @@
 			]);
 	});
 
-	
+	$app->router->add('about', function() use ($app){
+		$app->theme->setTitle('Om');
+		$content =$app->textFilter->doFilter($app->fileContent->get('about.md'), 'markdown');
+
+		$app->views->add('me/page', [
+			'title' => 'Om Allt om Konspirationen',
+			'content' => $content
+			]);
+	});
 
 	$app->router->add('source', function() use ($app){
 		$app->theme->addStylesheet('css/source.css');

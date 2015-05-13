@@ -18,7 +18,9 @@
 			<aside class='options'>
 				<?php if($this->di->session->has('user') && $comment->type != 'comment') : ?>
 					<a href='<?php echo $this->di->url->create("comment/edit/comment/$comment->id")?>'>Kommentera</a><br/>
-					<a href='<?php echo $this->di->url->create("comment/edit/answer/$comment->id")?>'>Besvara</a>
+					<?php if($comment->type == 'question') : ?>
+						<a href='<?php echo $this->di->url->create("comment/edit/answer/$comment->id")?>'>Besvara</a>
+				<?php endif; ?>
 				<?php endif; ?>
 			</aside>
 
