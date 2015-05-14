@@ -213,6 +213,7 @@ class CommentController implements \Anax\DI\IInjectionAware
             if($done){
                 $this->redirectTo($this->di->url->create('comment'));
             } 
+            $this->di->theme->setTitle('Edit');
             $this->di->views->add('me/page', [
                 'content' => $form->getHTML(),
                 'id' => $id]);

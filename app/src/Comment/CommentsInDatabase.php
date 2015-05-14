@@ -8,6 +8,10 @@ namespace Deg\Comment;
  */
 class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
 {
+    private $pre;
+    public function __construct(){
+        $this->pre ='test_';
+    }
     public function find($id, $key='id')
     {
         return parent::find($id, $key);
@@ -35,12 +39,11 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
 
     public function findForDisplay($user=null)
     {
-        $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
-                FROM phpmvc_project_commentsindatabase
-                JOIN ".$pre."user
-                ON ".$pre."commentsindatabase.author=".$pre."user.acronym
-                WHERE ".$pre."commentsindatabase.type = 'question'";
+        $sql ="SELECT ".$this->pre."commentsindatabase.*, ".$this->pre."user.image, ".$this->pre."user.type as authortype
+                FROM ".$this->pre."commentsindatabase
+                JOIN ".$this->pre."user
+                ON ".$this->pre."commentsindatabase.author=".$this->pre."user.acronym
+                WHERE ".$this->pre."commentsindatabase.type = 'question'";
         if($user){
             $sql .=" AND author = '".$user."'";
         }
@@ -62,12 +65,11 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
     public function findLatest($limit)
     {
         $limit =$limit ? " LIMIT ".$limit : '';
-        $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
-                FROM phpmvc_project_commentsindatabase
-                JOIN ".$pre."user
-                ON ".$pre."commentsindatabase.author=".$pre."user.acronym
-                WHERE ".$pre."commentsindatabase.type = 'question'
+        $sql ="SELECT ".$this->pre."commentsindatabase.*, ".$this->pre."user.image, ".$this->pre."user.type as authortype
+                FROM ".$this->pre."commentsindatabase
+                JOIN ".$this->pre."user
+                ON ".$this->pre."commentsindatabase.author=".$this->pre."user.acronym
+                WHERE ".$this->pre."commentsindatabase.type = 'question'
                 ORDER BY created DESC"
                 .$limit.";";
 
@@ -85,15 +87,14 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
 
     public function findFullDisplay($id)
     {
-        $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
-                FROM ".$pre."commentsindatabase
-                JOIN ".$pre."user
+        $sql ="SELECT ".$this->pre."commentsindatabase.*, ".$this->pre."user.image, ".$this->pre."user.type as authortype
+                FROM ".$this->pre."commentsindatabase
+                JOIN ".$this->pre."user
                 ON author=acronym
-                WHERE ".$pre."commentsindatabase.id = ".$id."
+                WHERE ".$this->pre."commentsindatabase.id = ".$id."
                 OR (
                     forid = ".$id."
-                    AND ".$pre."commentsindatabase.type = 'answer');";
+                    AND ".$this->pre."commentsindatabase.type = 'answer');";
 
         $str =$id;
 
@@ -105,12 +106,12 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 $str .=','.$obj->id;
             }
         }
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
-                FROM ".$pre."commentsindatabase
-                JOIN ".$pre."user
+        $sql ="SELECT ".$this->pre."commentsindatabase.*, ".$this->pre."user.image, ".$this->pre."user.type as authortype
+                FROM ".$this->pre."commentsindatabase
+                JOIN ".$this->pre."user
                 ON author=acronym
                 WHERE forid IN (".$str.")
-                AND ".$pre."commentsindatabase.type = 'comment';";
+                AND ".$this->pre."commentsindatabase.type = 'comment';";
         $this->db->execute($sql);
         $qares = array_merge($qares, $this->db->fetchAll());
         $qares =$this->qaSort($qares);
@@ -138,11 +139,10 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
 
     public function findByTag($tag)
     {
-        $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
-                FROM phpmvc_project_commentsindatabase
-                JOIN ".$pre."user
-                ON ".$pre."commentsindatabase.author=".$pre."user.acronym
+        $sql ="SELECT ".$this->pre."commentsindatabase.*, ".$this->pre."user.image, ".$this->pre."user.type as authortype
+                FROM ".$this->pre."commentsindatabase
+                JOIN ".$this->pre."user
+                ON ".$this->pre."commentsindatabase.author=".$this->pre."user.acronym
                 WHERE tags LIKE '%,".$tag.",%';";
         $this->db->execute($sql);
         $all = $this->db->fetchAll();
@@ -217,9 +217,8 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
 
     public function countUp($type, $id)
     {
-        $pre ='phpmvc_project_';
         $col =$type.'count';
-        $sql ="UPDATE ".$pre."commentsindatabase
+        $sql ="UPDATE ".$this->pre."commentsindatabase
                 SET
                     ".$col." = ifnull(".$col.", 0) +1
                 WHERE id =".$id.";";
