@@ -53,7 +53,7 @@ return [
         'lang' => 'sv',
 
         // Append this value to each <title>
-        'title_append' => ' | Tema på temat tema',
+        'title_append' => ' | Tystnad är sanning',
 
         // Stylesheets
         'stylesheets' => ['css/anax-grid/style.php'],
