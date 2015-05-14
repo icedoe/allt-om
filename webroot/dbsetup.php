@@ -23,13 +23,13 @@ $success = true;
 echo "Creating user db table:<br/>&nbsp;&nbsp;";
 $u =$user->setup();
 if($u[0]) {
-	echo "Table buildt<br />";
+	echo "DONE<br />";
 }else {
 	$success =false;
 	echo "FAIL<br />";
 }
 
-echo "Adding admin account:<br />&nbsp;&nbsp;";
+echo "Adding admin account (usr: admin, pwd: admin):<br />&nbsp;&nbsp;";
 if($u[1]){
 	echo "DONE<br />";
 }else {
@@ -37,7 +37,7 @@ if($u[1]){
 	echo "FAIL<br />";
 }
 
-echo "Adding user account:<br />&nbsp;&nbsp;";
+echo "Adding user account (usr: doe, pwd: doe):<br />&nbsp;&nbsp;";
 if($u[2]){
 	echo "DONE<br />";
 }else {
