@@ -35,6 +35,8 @@
 					<hr class='indiv' />
 				<?php endif; ?>
 				<br/>
+			</div>
+			<div class='clear'>
 				<?=$comment->content?>
 			</div>
 

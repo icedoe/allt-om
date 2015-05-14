@@ -28,6 +28,10 @@
 				<a class='tag' href='<?php echo $this->di->url->create("comment/tag/$tag")?>'><?=$tag?></a>
 			<?php endforeach; ?>
 			<hr class='indiv' />
+		<?php if($comment->type != 'comment') : ?>
+		</div>
+		<div class='clear'>
+	<?php endif; ?>
 			<?=$comment->content?>
 		</div>
 
