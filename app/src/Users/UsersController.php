@@ -255,7 +255,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 			'content' => $form->getHTML()]);
 	}
 
-	public function setupAction()
+	public function setup()
 	{
 		 $this->db->dropTableIfExists('user')->execute();
  
@@ -313,8 +313,6 @@ class UsersController implements \Anax\DI\IInjectionAware
 	        $now,
 	        $now
 	    ]);
-	    $url=$this->url->create('users');
-	    $this->response->redirect($url);
 	}
 
 	public function getLoginForm()

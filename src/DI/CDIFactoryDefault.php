@@ -121,7 +121,7 @@ class CDIFactoryDefault extends CDI
         $this->setShared('theme', function () {
             $themeEngine = new \Anax\ThemeEngine\CThemeBasic();
             $themeEngine->setDI($this);
-            $themeEngine->configure(ANAX_APP_PATH . 'config/theme.php');
+            $themeEngine->configure(ANAX_APP_PATH . 'config/theme_grid.php');
             return $themeEngine;
         });
 

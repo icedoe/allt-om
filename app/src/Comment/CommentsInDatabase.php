@@ -36,7 +36,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
     public function findForDisplay($user=null)
     {
         $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
                 FROM phpmvc_project_commentsindatabase
                 JOIN ".$pre."user
                 ON ".$pre."commentsindatabase.author=".$pre."user.acronym
@@ -63,7 +63,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
     {
         $limit =$limit ? " LIMIT ".$limit : '';
         $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
                 FROM phpmvc_project_commentsindatabase
                 JOIN ".$pre."user
                 ON ".$pre."commentsindatabase.author=".$pre."user.acronym
@@ -86,7 +86,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
     public function findFullDisplay($id)
     {
         $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
                 FROM ".$pre."commentsindatabase
                 JOIN ".$pre."user
                 ON author=acronym
@@ -105,7 +105,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 $str .=','.$obj->id;
             }
         }
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
                 FROM ".$pre."commentsindatabase
                 JOIN ".$pre."user
                 ON author=acronym
@@ -139,7 +139,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
     public function findByTag($tag)
     {
         $pre ='phpmvc_project_';
-        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."User.image, ".$pre."User.type as authortype
+        $sql ="SELECT ".$pre."commentsindatabase.*, ".$pre."user.image, ".$pre."user.type as authortype
                 FROM phpmvc_project_commentsindatabase
                 JOIN ".$pre."user
                 ON ".$pre."commentsindatabase.author=".$pre."user.acronym

@@ -85,7 +85,6 @@ class CommentController implements \Anax\DI\IInjectionAware
         }
         }
 
-        print_r($all);
         $this->di->theme->setTitle('Fråga: '.$id);
         $this->views->add('comment/comments', [
             'comments' => $all ],
@@ -120,8 +119,7 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function editAction($type='question', $forId=null)
     {
-        
-            $id =$this->di->request->getPost('id');
+        $id =$this->di->request->getPost('id');
         
 
         $comment =$id ? $this->comments->find($id) : $this->comments;
@@ -218,22 +216,9 @@ class CommentController implements \Anax\DI\IInjectionAware
             $this->di->views->add('me/page', [
                 'content' => $form->getHTML(),
                 'id' => $id]);
-
-        
-    }
-
-
-    
-
-    public function deleteAction($redirect='comment', $commenter=false)
-    {
-        if($commenter){
-            $this->comments->delete($commenter, 'commenter');
-        }else {
-            $this->setup();
         }
-        $this->redirectTo('comment');
-    }
+
+
 
     public function setup()
     {
