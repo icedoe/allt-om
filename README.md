@@ -9,6 +9,9 @@ Forum site, buildt using Anax-MVC, intended as school-assignment.
 * If on linux: uncomment and edit line beginning with Rewrite base in webroot/.htaccess.
 * Point browser to webroot/dbsetup.php.
 * Remove dbsetup.php from server for safety.
+* Point browser to webroot.
+
+If missing styles. Try deleting style.css and style.less.cache from webroot/css/anax-grid and reload page. Also make sure you have chmod 777 in same directory.
 
 
 By Martin Degerman
