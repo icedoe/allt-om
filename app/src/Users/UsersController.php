@@ -257,62 +257,69 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function setup()
 	{
-		 $this->db->dropTableIfExists('user')->execute();
- 
+		$tbl=false;
+		$admin=false;
+		$user=false;
+
+		$this->db->dropTableIfExists('user')->execute();
+
     	$this->db->createTable(
-    	    'user',
-    	    [
-    	        'id'        => ['integer', 'auto_increment', 'primary key', 'not null'],
-    	        'acronym'   => ['varchar(20)', 'unique', 'not null'],
-    	        'email'     => ['varchar(80)', 'not null'],
-    	        'name'      => ['varchar(80)', 'not null'],
-    	        'shortdesc'	=> ['varchar(255)'],
-    	        'description' =>['text'],
-    	        'password'  => ['varchar(255)', 'not null'],
-    	        'image'		=> ['varchar(255)'],
-    	        'posted'	=> ['integer'],
-    	        'points'	=> ['integer'],
-    	        'type'		=> ['varchar(20)'],
-    	        'created'   => ['datetime'],
-    	        'updated'   => ['datetime'],
-    	        'deleted'   => ['varchar(5)', "default 'false'"],
-    	        'active'    => ['datetime'],
+   		    'user',
+   		    [
+   		        'id'        => ['integer', 'auto_increment', 'primary key', 'not null'],
+   		        'acronym'   => ['varchar(20)', 'unique', 'not null'],
+   		        'email'     => ['varchar(80)', 'not null'],
+   		        'name'      => ['varchar(80)', 'not null'],
+   		        'shortdesc'	=> ['varchar(255)'],
+   		        'description' =>['text'],
+   		        'password'  => ['varchar(255)', 'not null'],
+   		        'image'		=> ['varchar(255)'],
+   		        'posted'	=> ['integer'],
+   		        'points'	=> ['integer'],
+   		        'type'		=> ['varchar(20)'],
+   		        'created'   => ['datetime'],
+   		        'updated'   => ['datetime'],
+   		        'deleted'   => ['varchar(5)', "default 'false'"],
+   		        'active'    => ['datetime'],
 	        ]
 	    );
-	    $this->db->execute();
-	     $this->db->insert(
+	    if($this->db->execute()){
+	    	$tbl =true;
+	    }
+	    $this->db->insert(
 	        'user',
 		        ['acronym', 'email', 'name', 'shortdesc', 'password', 'image', 'type', 'posted', 'points', 'created', 'active']
 	    );
 
 	    $now =gmdate('Y-m-d H:i:s');
 
-	    $this->db->execute([
-	        'admin',
-	        'admin@dbwebb.se',
-	        'Administrator',
-	        'En av sidans administratörer',
-	        password_hash('admin', PASSWORD_DEFAULT),
-	        $this->di->users->gravUrl('admin@dbwebb.se'),
-	        'admin',
-	        '0',
-	        '0',
-	        $now,
-	        $now
-	    ]);
-	    $this->db->execute([
-	        'doe',
-	        'doe@dbwebb.se',
-	        'John/Jane Doe',
-	        'En förvirrad stackars användare, vars enda brott var registrering',
-	        password_hash('doe', PASSWORD_DEFAULT),
-	        $this->di->users->gravUrl('doe@dbwebb.se'),
-	        'user',
-	        '0',
-	        '0',
-	        $now,
-	        $now
-	    ]);
+	    if($this->db->execute([
+	    	    'admin',
+	    	    'admin@dbwebb.se',
+	    	    'Administrator',
+	    	    'En av sidans administratörer',
+	    	    password_hash('admin', PASSWORD_DEFAULT),
+	    	    $this->di->users->gravUrl('admin@dbwebb.se'),
+	    	    'admin',
+	    	    '0',
+	    	    '0',
+	    	    $now,
+	    	    $now
+	    	])) { $admin =true;}
+	    if($this->db->execute([
+	    	    'doe',
+	        	'doe@dbwebb.se',
+	        	'John/Jane Doe',
+	        	'En förvirrad stackars användare, vars enda brott var registrering',
+	        	password_hash('doe', PASSWORD_DEFAULT),
+	        	$this->di->users->gravUrl('doe@dbwebb.se'),
+	        	'user',
+	        	'0',
+	        	'0',
+	        	$now,
+	        	$now
+	    	])){ $user =true;}
+	    return array($tbl, $admin, $user);
 	}
 
 	public function getLoginForm()

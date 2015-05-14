@@ -18,8 +18,42 @@ $user->setDI($di);
 
 $app = new \Anax\Kernel\CAnax($di);
 
+$success = true;
 
+echo "Creating user db table:<br/>&nbsp;&nbsp;";
+$u =$user->setup();
+if($u[0]) {
+	echo "Table buildt<br />";
+}else {
+	$success =false;
+	echo "FAIL<br />";
+}
 
-$user->setup();
-$comment->setup();
+echo "Adding admin account:<br />&nbsp;&nbsp;";
+if($u[1]){
+	echo "DONE<br />";
+}else {
+	$success =false;
+	echo "FAIL<br />";
+}
+
+echo "Adding user account:<br />&nbsp;&nbsp;";
+if($u[2]){
+	echo "DONE<br />";
+}else {
+	$success =false;
+	echo "FAIL<br />";
+}
+echo "Creating comment db table:<br />&nbsp;&nbsp;";
+if($comment->setup()) {
+	echo "DONE<br />";
+}else {
+	$success =false;
+	echo "FAIL<br />";
+}
+if($success){
+	echo "Setup finished<br />";
+}else {
+	echo "Setup failed. Check db config settings<br />";
+}
 
