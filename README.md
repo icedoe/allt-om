@@ -41,7 +41,7 @@ The following external modules are included and subject to its own license.
 * Website https://github.com/mosbth/cdatabase
 * Version: 0.1.x
 * Licence: MIT license
-* Path: included in `vendor/mos/cdatabase`
+* Path: included in `src/Database`
 
 
 
@@ -49,7 +49,7 @@ The following external modules are included and subject to its own license.
 * Website: https://github.com/mosbth/cform
 * Version: 1.9.x
 * License: MIT license
-* Path: included in `vendor/mos/cform`
+* Path: included in `src/HTMLForm`
 
 
 

@@ -1,8 +1,8 @@
 <?php
 
-define(DB_USER, 'root');
-define(DB_PASSWORD, '1234');
-define(DB_NAME, 'test');
+define('DB_USER', 'root');
+define('DB_PASSWORD', '1234');
+define('DB_NAME', 'test');
 
 return [
     // Set up details on how to connect to the database
