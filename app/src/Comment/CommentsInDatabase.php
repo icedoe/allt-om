@@ -111,7 +111,8 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 JOIN ".$this->pre."user
                 ON author=acronym
                 WHERE forid IN (".$str.")
-                AND ".$this->pre."commentsindatabase.type = 'comment';";
+                AND ".$this->pre."commentsindatabase.type = 'comment'
+                ORDER BY id;";
         $this->db->execute($sql);
         $qares = array_merge($qares, $this->db->fetchAll());
         $qares =$this->qaSort($qares);
