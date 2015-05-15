@@ -35,8 +35,10 @@
 					<hr class='indiv' />
 				<?php endif; ?>
 				<br/>
+			<?php if($comment->type != 'comment') :?>
 			</div>
 			<div class='clear'>
+		<?php endif; ?>
 				<?=$comment->content?>
 			</div>
 
