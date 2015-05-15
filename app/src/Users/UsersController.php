@@ -244,7 +244,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 		if($form->check()){
 			$id =$this->di->request->getpost('users');
-			$this->di->db->update('User', ['deleted'], ['false'], 'id='.$id);
+			$this->di->db->update('user', ['deleted'], ['false'], "id='".$id."'");
 			$this->di->db->execute();
 			
 		
