@@ -19,7 +19,7 @@
 					
 				</tr>
 				<tr>
-					<td colspan='2'>
+					<td colspan='3'>
 						Postat: <?=$user->posted?>
 						&nbsp;
 						Email: <?=$user->email?>
