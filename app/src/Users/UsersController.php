@@ -440,7 +440,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 	private function doSoftDelete($acronym)
 	{
 			$now =gmdate('Y-m-d H:i:s');
-			$this->di->db->update('user', ['deleted', 'updated'], ['true', $now, $acronym], 'acronym');
+			$this->di->db->update('user', ['deleted', 'updated'], ['true', $now], "acronym='".$acronym."'");
 			$this->di->db->execute();
 			$u = $this->di->session->get('user');
 			if($u['acronym'] == $acronym){
