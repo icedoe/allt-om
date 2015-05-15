@@ -35,7 +35,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 	public function startAction($post, $calling)
 	{
-		$all =$this->di->users->query()->where("deleted = 'false'")->orderBy('posted')->limit(4)->execute();
+		$all =$this->di->users->query()->where("deleted = 'false'")->orderBy('posted DESC')->limit(4)->execute();
 		foreach($all as &$user){
 			$user->shortdesc =$this->di->textFilter->doFilter(htmlentities($user->shortdesc), 'markdown');
 		}
