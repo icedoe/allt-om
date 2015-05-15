@@ -198,7 +198,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 }
             }
         }
-        return $array;
+        return arsort($array);
     }
 
     private function qaSort($qares)
