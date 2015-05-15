@@ -238,7 +238,6 @@ class UsersController implements \Anax\DI\IInjectionAware
 	public function undoDeleteAction($id=null)
 	{
 		$users =$this->di->users->query()->where("deleted = 'true'")->execute();
-		print_r($users);
 
 		$form =$this->getIdSelect('Återställ', $users);
 
