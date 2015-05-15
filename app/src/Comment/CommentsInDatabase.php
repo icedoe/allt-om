@@ -198,6 +198,7 @@ class CommentsInDatabase extends \Anax\MVC\CDatabaseModel
                 }
             }
         }
+        asort($array);
         return $array;
     }
 
