@@ -443,10 +443,11 @@ class UsersController implements \Anax\DI\IInjectionAware
 			$this->di->db->update('user', ['deleted', 'updated'], ['true', $now], 'acronym='.$acronym);
 			$this->di->db->execute();
 			$u = $this->di->session->get('user');
-			if($u['id'] == $id){
+			if($u['acronym'] == $acronym){
 				$this->di->users->logout('user');
 			}
-			$url =$this->url->create('users/id/'.$id);
+			$user =$this->di->users->find($acronym, 'acronym');
+			$url =$this->url->create('users/id/'.$user->id);
 			$this->response->redirect($url);
 	}
 }
