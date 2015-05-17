@@ -90,7 +90,7 @@ class SidebarController implements \Anax\DI\IInjectionAware
 	private function getUserMenu()
 	{
 		$array =[];
-		
+
 		//Question
 		$array['Ställ fråga'] = [
 			'icon' => "<i class='fa-li fa fa-plus'></i>",
@@ -104,7 +104,7 @@ class SidebarController implements \Anax\DI\IInjectionAware
 				];
 			$array['Avregistera'] = [
 				'icon' => "<i class='fa-li fa fa-ban'></i>",
-				'url' => $this->di->url->create('users/soft-delete/'.$this->user['id'])
+				'url' => $this->di->url->create('users/soft-delete/'.$this->user['acronym'])
 				];
 		} else {
 			$array['Min profil'] = [
@@ -112,8 +112,8 @@ class SidebarController implements \Anax\DI\IInjectionAware
 				'url' => $this->di->url->create('users/id')
 			];
 		}
-		
-		
+
+
 		//logout
 		$array['Logga ut'] = [
 			'icon' => "<i class='fa-li fa fa-sign-out'></i>",

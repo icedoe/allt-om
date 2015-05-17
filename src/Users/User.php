@@ -23,7 +23,7 @@ class User extends \Anax\MVC\CDatabaseModel
 	public function login($name, $password)
 	{
 		$user =$this->find($name, 'acronym')->getProperties();
-		
+
 		//$pw=$user['password'];
 		//echo $password;
 

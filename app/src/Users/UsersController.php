@@ -51,9 +51,9 @@ class UsersController implements \Anax\DI\IInjectionAware
 			]);
 	}
 
-	
-	
-	
+
+
+
 
 	public function idAction($id=null)
 	{
@@ -113,7 +113,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 
 		if($form->check()){
 			$now =gmdate('Y-m-d H:i:s');
-		
+
 			$user =[
 				'acronym' => $this->di->form->Value('acronym'),
 				'email' => $this->di->form->Value('email'),
@@ -142,22 +142,15 @@ class UsersController implements \Anax\DI\IInjectionAware
    	    'main');
 	}
 
-	public function updateAction($id=false, $upgrade=false)
+	public function updateAction($acronym=false, $upgrade=false)
 	{
-		$user = $id ? $this->di->users->find($id)->getProperties() : $this->di->session->get('user');
-		
 		if($upgrade){
-			$u =$this->di->session->get('user');
-			if($u['type'] == 'admin'){
-				$u =[
-					'id' => $user['id'],
-					'type' => $upgrade
-				];
-				if($this->di->users->save($u)){
-				$url =$this->di->url->create('users/id/'.$this->di->users->id);
-				$this->response->redirect($url);
-				}
-			}
+			$now =gmdate('Y-m-d H:i:s');
+			$this->di->db->update('user', ['type', 'updated'], ['admin', $now], "acronym='".$acronym."'");
+			$this->di->db->execute();
+			$u = $this->di->session->get('user');
+
+			$this->redirectTo($this->di->session->get('lastPage'));
 		}
 
 		$form =$this->getUserForm($user);
@@ -191,8 +184,8 @@ class UsersController implements \Anax\DI\IInjectionAware
 		$this->views->add('me/page', [
 			'content' => $form->getHTML()]);
 	}
-	
-	
+
+
 	public function deleteAction()
 	{
 //		$id =$this->di->request->getPost('users');
@@ -216,23 +209,24 @@ class UsersController implements \Anax\DI\IInjectionAware
 			'content' => $content]);
 		$this->views->add('me/page', [
 			'content' => $form->getHTML()]);
-	
-		
+
+
 
 	//	$url =$this->url->create('users/delete');
 	//	$this->response->redirect($url);
 
 
-    
+
 	}
 
 
 	public function softDeleteAction($id=null)
 	{
+
 		if($id){
 			$this->doSoftDelete($id);
 		}
-		
+
 	}
 
 	public function undoDeleteAction($id=null)
@@ -245,8 +239,8 @@ class UsersController implements \Anax\DI\IInjectionAware
 			$id =$form->Value('users');
 			$this->di->db->update('user', ['deleted'], ['false'], "id='".$id."'");
 			$this->di->db->execute();
-			
-		
+
+
 			$url =$this->url->create('users/id/'.$id);
 			$this->response->redirect($url);
 		}
@@ -355,7 +349,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 		$user['description'] =isset($user['description']) ? $user['description'] : '';
 		$passValidation =isset($user['password']) ? "pass" : "not_empty";
 		$passReq =isset($user['password']) ? false : true;
-		
+
 		$vals=[
 			'id' => [
 				'type'		=> 'hidden',
@@ -407,7 +401,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 		}
 
         $form = $this->di->form->create([], $vals);
-        
+
 
         return $form;
 	}
@@ -415,7 +409,7 @@ class UsersController implements \Anax\DI\IInjectionAware
 	public function getIdSelect($act, $users)
 	{
 		$all =$users;
-			
+
 			$options =['default' => 'Välj användare'];
 			foreach($all as $user){
 				$options[$user->id] = $user->acronym;
@@ -444,9 +438,11 @@ class UsersController implements \Anax\DI\IInjectionAware
 			$u = $this->di->session->get('user');
 			if($u['acronym'] == $acronym){
 				$this->di->users->logout('user');
+				$url =$this->url->create('users');
+			} else {
+				$user =$this->di->users->find($acronym, 'acronym');
+				$url =$this->url->create('users/id/'.$user->id);
 			}
-			$user =$this->di->users->find($acronym, 'acronym');
-			$url =$this->url->create('users/id/'.$user->id);
 			$this->response->redirect($url);
 	}
 }
